@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <title>REGISTER</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="logo.png" type="image/png">
+        <link rel="stylesheet" href="style.css?v=2">
+
+        <style>
+            /* التنسيقات الإضافية للمتجر والعملات */
+            :root {
+                --bubble-color: rgba(0, 212, 255, 0.2);
+                --bubble-border: #00d4ff;
+                --card-bg: rgba(255, 255, 255, 0.05);
+                --card-border: rgba(255, 255, 255, 0.1);
+            }
+
+            body {
+                font-family: 'Share Tech', sans-serif;
+                background-color: #0b0f19; /* خلفية داكنة تناسب الأجواء العلمية والـ Sci-Fi */
+                color: #fff;
+                margin: 0;
+            }
+
+            /* عداد الكوينات (الفقاعة) */
+            .coin-container {
+                position: fixed;
+                top: 100px;
+                left: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 100;
+            }
+
+            .o2-bubble {
+                background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent), var(--bubble-color);
+                border: 2px solid var(--bubble-border);
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 0 15px var(--bubble-border), inset 0 0 10px rgba(255,255,255,0.5);
+                animation: float 3s ease-in-out infinite;
+            }
+
+            .o2-bubble .count {
+                font-size: 14px;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .o2-bubble .label {
+                font-size: 10px;
+                color: var(--bubble-border);
+                text-shadow: 0 0 5px var(--bubble-border);
+            }
+
+            /* زر زيادة الكوينات المؤقت */
+            .add-coins-btn {
+                background: #00d4ff;
+                border: none;
+                color: #0b0f19;
+                padding: 8px 12px;
+                border-radius: 20px;
+                font-weight: bold;
+                cursor: pointer;
+                box-shadow: 0 0 10px #00d4ff;
+                transition: transform 0.2s;
+            }
+
+            .add-coins-btn:hover {
+                transform: scale(1.1);
+            }
+
+            /* تنسيق قسم المتجر داخل hero-actions */
+            .hero-actions {
+                max-height: 70vh;
+                overflow-y: auto;
+                padding: 10px;
+                width: 100%;
+            }
+
+            .shop-title {
+                text-align: center;
+                color: #00d4ff;
+                text-shadow: 0 0 10px #00d4ff;
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+
+            .shop-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 15px;
+            }
+
+            /* كروت المختبرات */
+            .lab-card {
+                background: var(--card-bg);
+                border: 1px solid var(--card-border);
+                border-radius: 12px;
+                padding: 15px;
+                text-align: center;
+                backdrop-filter: blur(5px);
+                transition: all 0.3s ease;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 160px;
+            }
+
+            .lab-card:hover {
+                border-color: #00d4ff;
+                box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+                transform: translateY(-3px);
+            }
+
+            .lab-icon {
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+
+            .lab-name {
+                font-size: 14px;
+                margin: 5px 0;
+                font-weight: bold;
+            }
+
+            .lab-price {
+                color: #00d4ff;
+                font-size: 13px;
+                margin-bottom: 10px;
+            }
+
+            .buy-btn {
+                background: transparent;
+                border: 1px solid #00d4ff;
+                color: #00d4ff;
+                padding: 5px 15px;
+                border-radius: 15px;
+                cursor: pointer;
+                width: 100%;
+                transition: all 0.2s;
+            }
+
+            .buy-btn:hover {
+                background: #00d4ff;
+                color: #0b0f19;
+            }
+
+            .buy-btn.owned {
+                background: rgba(0, 255, 120, 0.2);
+                border-color: #00ff78;
+                color: #00ff78;
+                cursor: not-allowed;
+            }
+
+            /* أنيميشن حركة الفقاعة */
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+        </style>
+        <!-- Settings System Initializer -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+</head>
+    <body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+    
+    <div class="coin-container">
+        <div class="o2-bubble">
+            <span class="count" id="coinCount">0</span>
+            <span class="label">O₂</span>
+        </div>
+        <button class="add-coins-btn" id="addCoinsBtn" type="button">+100</button>
+    </div>
+
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <div class="upbox">
+       &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"> <img src="logo.png" width="70px" alt="Logo"></div>
+      <span class="brand-name">AMR SAKR</span>
+      <div class="upboxs">
+        <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+          <img src="menu.png" width="60px" alt="Menu">
+        </button>
+      </div>
+    </div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+      <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu">×</button>
+      <h2>AMR SAKR</h2>
+<a href="code.html">SIGN IN</a>
+
+      <a href="contact.html">CONTACT</a>
+      <a href="designer.html">THE WEB DESIGNER</a>
+      <a href="#" onclick="localStorage.removeItem('savedCode');">SIGN OUT</a>
+    </aside>
+
+    <main class="hero-wrap">
+      <section class="hero-card hero-split">
+        <article class="hero-visual">
+          <p class="eyebrow">unlock the wonders of science</p>
+          <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
+          <h1 class="hero-title">AMR SAKR</h1>
+          <p class="hero-text">science educator <br> ( dive into the world of science )</p>
+        </article>
+
+        <aside class="hero-actions">
+          <h2 class="shop-title">SCIENCE LAB SHOP</h2>
+          <div class="shop-grid" id="shopGrid">
+              </div>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      // أكواد القائمة الجانبية الخاصة بك
+      const menuBtn = document.getElementById('menuBtn');
+      const sideMenu = document.getElementById('sideMenu');
+      const overlay = document.getElementById('menuOverlay');
+      const closeMenu = document.getElementById('closeMenu');
+
+      function openMenu() {
+        sideMenu.classList.add('open');
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenuPanel() {
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+
+      menuBtn.addEventListener('click', openMenu);
+      closeMenu.addEventListener('click', closeMenuPanel);
+      overlay.addEventListener('click', closeMenuPanel);
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeMenuPanel();
+        }
+      });
+
+      // ==========================================
+      // نظام العملات والمتجر الجديد
+      // ==========================================
+      
+      // الكوينات المخزنة أو البدء بـ 0
+      let coins = parseInt(localStorage.getItem('o2_coins')) || 0;
+      // العناصر المشتراة مخزنة مسبقاً
+      let purchasedItems = JSON.parse(localStorage.getItem('purchased_labs')) || [];
+
+      // قائمة المختبرات الـ 8 المطلوبة
+      const labs = [
+          { id: 'chem_react', name: 'Chemical Reaction', price: 150, icon: '🧪' },
+          { id: 'light_refract', name: 'Light Refraction', price: 200, icon: '🔍' },
+          { id: 'light_reflect', name: 'Light Reflection', price: 250, icon: '🪞' },
+          { id: 'mag_field', name: 'Magnetic Fields', price: 350, icon: '🧲' },
+          { id: 'dna_seq', name: 'DNA Sequencing', price: 500, icon: '🧬' },
+          { id: 'solar_energy', name: 'Solar Energy', price: 600, icon: '☀️' },
+          { id: 'quantum_phys', name: 'Quantum Physics', price: 850, icon: '⚛️' },
+          { id: 'rocket_prop', name: 'Rocket Propulsion', price: 1200, icon: '🚀' }
+      ];
+
+      const coinCountEl = document.getElementById('coinCount');
+      const addCoinsBtn = document.getElementById('addCoinsBtn');
+      const shopGrid = document.getElementById('shopGrid');
+
+      // تحديث شاشة العداد
+      function updateCoinDisplay() {
+          coinCountEl.textContent = coins;
+          localStorage.setItem('o2_coins', coins);
+      }
+
+      // زر الـ +100 المؤقت
+      addCoinsBtn.addEventListener('click', () => {
+          coins += 100;
+          updateCoinDisplay();
+          renderShop(); // لإعادة فحص الأزرار إذا أصبحت قابلة للشراء
+      });
+
+      // رندرة وبناء كروت المتجر
+      function renderShop() {
+          shopGrid.innerHTML = '';
+          labs.forEach(lab => {
+              const isOwned = purchasedItems.includes(lab.id);
+              
+              const card = document.createElement('div');
+              card.className = 'lab-card';
+              
+              card.innerHTML = `
+                  <div class="lab-icon">${lab.icon}</div>
+                  <div class="lab-name">${lab.name}</div>
+                  <div class="lab-price">${lab.price} O₂</div>
+                  <button class="buy-btn ${isOwned ? 'owned' : ''}" 
+                          onclick="buyLab('${lab.id}', ${lab.price})" 
+                          ${isOwned ? 'disabled' : ''}>
+                      ${isOwned ? 'Owned ✓' : 'Buy'}
+                  </button>
+              `;
+              shopGrid.appendChild(card);
+          });
+      }
+
+      // وظيفة الشراء
+      window.buyLab = function(labId, price) {
+          if (purchasedItems.includes(labId)) return;
+
+          if (coins >= price) {
+              coins -= price;
+              purchasedItems.push(labId);
+              localStorage.setItem('purchased_labs', JSON.stringify(purchasedItems));
+              updateCoinDisplay();
+              renderShop();
+              alert('🎉 Awesome! You unlocked a new science lab!');
+          } else {
+              alert('❌ Not enough O₂ coins! Click the +100 button to get more.');
+          }
+      };
+
+      // التشغيل المبدئي عند تحميل الصفحة
+      updateCoinDisplay();
+      renderShop();
+    </script>
+    </body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="AMR SAKR - Science Educator. Unlock the wonders of science and dive into the world of learning with interactive courses, expert instructors, and modern technology.">
+  <meta name="keywords"
+    content="AMR SAKR, AMR SAKR platform, AMR platform, amr sakr, amrplatform, amr sakr platform, amr sakr education, amr sakr online, amr sakr science, AMR platform education, AMR platform online, AMR platform science, amr sakr platfrom, amr platfrom, amr sakr pltaform, amr sakr plattform, amr sakr edu, amr sakr learn, amr sakr study, amr sakr courses, amr sakr website, amr sakr academy, عمرو صقر, عمرو صقر منصة, عمرو صقر platform, عمرو صقر education, عمرو صقر online, عمرو صقر science, عمرو صقر تعليم, عمرو صقر تعلم, عمرو صقر عربي, عمرو صقر بالعربي, منصة عمرو صقر, منصة أم آر سكر, منصة amr, amr platform arabic, amr sakr arabic, amr sakr انجليزي, amr sakr بالعربي, amr sakr تعليم, amr sakr تعلم, amr sakr علمي, amr sakr platform عربي, amr sakr platform arabic, amr sakr arabic platform, amr sakr website arabic, amr sakr online learning, amr sakr educational platform, amr sakr learning platform, amr sakr study platform, عمرو صقر التعليم, عمرو صقر التعلم, عمرو صقر المنصة, عمرو صقر التعليم الالكتروني, عمرو صقر موقع, عمرو صقر مدونة, عمرو صقر تعليمى, عمرو صقر تعلمى, amr sakr platform egypt, amr sakr platform online, amr sakr platform education, amr sakr platform science, amr sakr platform arabic english">
+  <meta name="author" content="AMR SAKR Team">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://diaaabdelhady-maker.github.io/sakr-platform/">
+  <meta property="og:title" content="AMR SAKR - Science Educator">
+  <meta property="og:description"
+    content="Unlock the wonders of science - Dive into the world of science with AMR SAKR">
+  <meta property="og:image" content="https://diaaabdelhady-maker.github.io/sakr-platform/logo.png">
+  <meta property="og:site_name" content="AMR SAKR">
+  <meta property="og:locale" content="en_US">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://diaaabdelhady-maker.github.io/sakr-platform/">
+  <meta property="twitter:title" content="AMR SAKR - Science Educator">
+  <meta property="twitter:description"
+    content="Unlock the wonders of science - Dive into the world of science with AMR SAKR">
+  <meta property="twitter:image" content="https://diaaabdelhady-maker.github.io/sakr-platform/logo.png">
+
+  <link rel="canonical" href="https://diaaabdelhady-maker.github.io/sakr-platform/index.html">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AMR SAKR">
+  <meta name="theme-color" content="#ffd721">
+
+  <title>AMR SAKR - Science Educator</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="logo.png">
+
+
+  <style>
+    /* الغطاء الخلفي الشفاف المؤثر */
+    .terms-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 30, 0.7);
+      /* لون نيلي متناسق مع الخلفية */
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      /* أعلى من كل شيء بما في ذلك القائمة الجانبية */
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    /* صندوق الشروط الزجاجي المتناسق */
+    .terms-popup-box {
+      background: linear-gradient(145deg, rgba(15, 15, 60, 0.95), rgba(5, 5, 35, 0.98));
+      color: #ffffff;
+      padding: 24px 20px;
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 82vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      /* إطار ذهبي خفيف */
+      font-family: "Share Tech", sans-serif;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .terms-popup-header h1 {
+      font-size: 26px;
+      color: #ffd700;
+      /* اللون الذهبي الخاص بمنصتك */
+      margin: 0 0 4px 0;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .terms-popup-header p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      text-align: center;
+      margin: 0 0 20px 0;
+    }
+
+    .terms-popup-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 6px;
+      margin-bottom: 20px;
+    }
+
+    .terms-popup-content .terms-section {
+      margin-bottom: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .terms-popup-content h2 {
+      font-size: 15px;
+      color: #ffe46b;
+      margin: 0 0 6px 0;
+      letter-spacing: 0.5px;
+    }
+
+    .terms-popup-content p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0;
+    }
+
+    /* زر الموافقة المماثل لأزرار الموقع الأصلية */
+    .btn-agree {
+      background: linear-gradient(135deg, #fff7c5 0%, #ffd700 45%, #ffbb00 100%);
+      color: rgb(0, 0, 103);
+      width: 100%;
+      min-height: 56px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 14px;
+      font-size: 20px;
+      font-family: "Share Tech", sans-serif;
+      font-weight: 400;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-agree:hover {
+      background: linear-gradient(135deg, #0b0b7a, #1010a0);
+      color: rgb(255, 240, 180);
+      transform: translateY(-2px);
+    }
+
+    .btn-agree:active {
+      transform: translateY(0);
+    }
+
+    /* تخصيص السكرول بار الداخلي ليناسب التصميم المخفي للموقع */
+    .terms-popup-content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .terms-popup-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    /* تعديلات خاصة بالشاشات الصغيرة والموبايل الصغير جداً */
+    @media (max-width: 400px) {
+      .terms-popup-box {
+        padding: 18px 14px;
+        max-height: 85vh;
+      }
+
+      .terms-popup-header h1 {
+        font-size: 22px;
+      }
+
+      .terms-popup-content p {
+        font-size: 13px;
+      }
+
+      .btn-agree {
+        min-height: 50px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <div id="termsPopup" class="terms-popup-overlay">
+    <div class="terms-popup-box">
+      <div class="terms-popup-header">
+        <h1>TERMS & CONDITIONS</h1>
+        <p>Last Updated: July 2026</p>
+      </div>
+
+      <div class="terms-popup-content">
+        <div class="terms-section">
+          <h2>1. ACCEPTANCE OF TERMS</h2>
+          <p>By using this platform, you agree to these terms. If you don't agree, please don't use it.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>2. USER ACCOUNT</h2>
+          <p>You are responsible for keeping your login credentials confidential. Do not share your account with others.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h2>3. CONTENT OWNERSHIP</h2>
+          <p>All course materials and videos are owned by AMR SAKR. You can view them for personal learning only.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>4. NO RECORDING</h2>
+          <p>Recording, downloading, or sharing course content without permission is prohibited.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>5. CONTACT US</h2>
+          <p>For questions, visit our <a href="contact.html" style="color: #ffe89d;">Contact Page</a>.</p>
+        </div>
+      </div>
+
+      <div class="terms-popup-actions">
+        <button id="agreeBtn" class="btn-agree">I AGREE</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="upbox">
+    &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"> <img src="logo.png" width="70px" alt="Logo"></div>
+
+    <span class="brand-name">AMR SAKR</span>
+    <div class="upboxs">
+      <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+        <img src="menu.png" width="60px" alt="Menu">
+      </button>
+    </div>
+  </div>
+
+  <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+    <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu"><span
+        class="material-symbols-rounded">close</span></button>
+    <h2>AMR SAKR</h2>
+    <a href="code.html"><span class="material-symbols-rounded menu-icon">login</span>SIGN IN</a>
+    <a href="contact.html"><span class="material-symbols-rounded menu-icon">mail</span>CONTACT</a>
+    <a href="designer.html"><span class="material-symbols-rounded menu-icon">brush</span>THE WEB DESIGNER</a>
+    <a href="#" onclick="localStorage.removeItem('savedCode');"><span
+        class="material-symbols-rounded menu-icon">logout</span>SIGN OUT</a>
+  </aside>
+
+  <main class="hero-wrap">
+    <section class="hero-card hero-split">
+      <article class="hero-visual">
+        <p class="eyebrow">unlock the wonders of science</p>
+        <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
+        <h1 class="hero-title">AMR SAKR</h1>
+        <p class="hero-text">science educator <br> ( dive into the world of science )</p>
+      </article>
+
+      <aside class="hero-actions">
+        <div class="btn-group">
+          <a href="code.html"><button class="btn">SIGN IN</button></a>
+          <a href="contact.html"><button class="btn">CONTACT SUPPORT</button></a>
+          <a href="terms.html"><button class="btn">TERMS & CONDITIONS</button></a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    // كود القائمة الجانبية الأصلي الخاص بك
+    const menuBtn = document.getElementById('menuBtn');
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    function openMenu() {
+      sideMenu.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenuPanel() {
+      sideMenu.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    closeMenu.addEventListener('click', closeMenuPanel);
+    overlay.addEventListener('click', closeMenuPanel);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeMenuPanel();
+      }
+    });
+
+    // الكود الجديد الخاص بـ البوكس المنبثق للشروط والأحكام (يظهر مرة واحدة فقط)
+    const termsPopup = document.getElementById('termsPopup');
+    const agreeBtn = document.getElementById('agreeBtn');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // التحقق مما إذا كان المستخدم قد وافق سابقاً أم لا
+      if (!localStorage.getItem('termsAccepted')) {
+        termsPopup.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // منع السكرول في الخلفية أثناء ظهور البوكس
+      }
+    });
+
+    agreeBtn.addEventListener('click', () => {
+      // حفظ موافقة المستخدم في المتصفح وإغلاق البوكس
+      localStorage.setItem('termsAccepted', 'true');
+      termsPopup.style.display = 'none';
+      document.body.style.overflow = ''; // إعادة تفعيل السكرول
+    });
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch((error) => {
+          console.warn('Service worker registration failed:', error);
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

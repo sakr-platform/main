@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8">
+    <title>MAIN PAGE - MIDDLE 1</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+      .name-container {
+        margin: 20px 0;
+        padding: 15px 20px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      #nameDisplay {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: 0.5px;
+      }
+      
+      .welcome-text {
+        font-size: 0.8rem;
+        color: #888;
+        display: block;
+        margin-bottom: 6px;
+        letter-spacing: 2px;
+      }
+
+      .btn-achievements {
+        position: relative;
+        background-color: #050508;
+        background-image: 
+          radial-gradient(circle at 15% 25%, #fff 1.5px, transparent 1.5px),
+          radial-gradient(circle at 75% 15%, #fff 1px, transparent 1px),
+          radial-gradient(circle at 35% 75%, rgba(255,255,255,0.8) 2px, transparent 2px),
+          radial-gradient(circle at 55% 30%, #fff 0.8px, transparent 0.8px),
+          radial-gradient(circle at 85% 85%, #fff 1.2px, transparent 1.2px),
+          linear-gradient(135deg, #05050a 0%, #160a2c 100%);
+        background-size: 100% 100%;
+        color: #fff !important;
+        border: 1px solid #4a2685 !important;
+        overflow: hidden;
+        z-index: 1;
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn-achievements::after {
+        content: "";
+        position: absolute;
+        right: -25px;
+        top: 50%;
+        width: 68px;
+        height: 68px;
+        background: radial-gradient(circle at 30% 30%, #b366ff, #541399 50%, #190033);
+        border-radius: 50%;
+        box-shadow: 
+          inset -6px -6px 14px rgba(0,0,0,0.95),
+          0 0 20px rgba(179, 102, 255, 0.4);
+        z-index: -1;
+        opacity: 0.9;
+        transform: translateY(-50%) scale(1);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn-achievements .ring {
+        position: absolute;
+        right: -42px;
+        top: 50%;
+        width: 100px;
+        height: 14px;
+        border: 2px solid rgba(218, 179, 255, 0.35);
+        border-radius: 50%;
+        z-index: -1;
+        transform: translateY(-50%) rotate(-18deg) scale(1);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      }
+
+      .btn-achievements .small-planet {
+        position: absolute;
+        right: 60px;
+        top: 15%;
+        width: 18px;
+        height: 18px;
+        background: radial-gradient(circle at 30% 30%, #ff79c6, #8b1e5f);
+        border-radius: 50%;
+        box-shadow: inset -2px -2px 5px rgba(0,0,0,0.8);
+        z-index: -2;
+        opacity: 0.5;
+        transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn-achievements:hover {
+        border-color: #9b51e0 !important;
+        box-shadow: 0 0 30px rgba(155, 81, 224, 0.4);
+        background-color: #0a0616;
+      }
+      
+      .btn-achievements:hover::after {
+        right: 40%;
+        transform: translateY(-50%) scale(1.15);
+        opacity: 0.95;
+        box-shadow: 
+          inset -6px -6px 14px rgba(0,0,0,0.95),
+          0 0 40px rgba(179, 102, 255, 0.85);
+      }
+
+      .btn-achievements:hover .ring {
+        right: 34%;
+        transform: translateY(-50%) rotate(-18deg) scale(1.15);
+        border-color: rgba(218, 179, 255, 0.6);
+      }
+
+      .btn-achievements:hover .small-planet {
+        right: 85%;
+        top: 60%;
+        transform: scale(0.8);
+        opacity: 0.2;
+      }
+    </style>
+      <!-- Settings System Initializer -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+</head>
+  <body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <div class="upbox">
+       &nbsp;&nbsp;&nbsp;&nbsp; <div class="hh"><img src="logo.png" width="70px" alt="Logo"></div>
+      <span class="brand-name">AMR SAKR</span>
+      <div class="upboxs">
+        <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+          <img src="menu.png" width="60px" alt="Menu">
+        </button>
+      </div>
+    </div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+      <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu"><span class="material-symbols-rounded">close</span></button>
+      <h2>AMR SAKR</h2>
+<a href="index.html"><span class="material-symbols-rounded menu-icon">home</span>HOME</a>
+      <a href="contact.html"><span class="material-symbols-rounded menu-icon">mail</span>CONTACT</a>
+      <a href="designer.html"><span class="material-symbols-rounded menu-icon">brush</span>THE WEB DESIGNER</a>
+      <a href="#" onclick="localStorage.removeItem('savedCode'); localStorage.removeItem('userId'); localStorage.removeItem('userName'); localStorage.removeItem('userRole'); localStorage.removeItem('completedLessons'); window.location.href='index.html';"><span class="material-symbols-rounded menu-icon">logout</span>SIGN OUT</a>
+    </aside>
+
+    <main class="hero-wrap">
+      <section class="hero-card hero-split">
+        
+        <article class="hero-visual">
+          <p class="eyebrow">YOUR CHANNEL</p>
+          <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
+          <h1 class="hero-title">AMR SAKR</h1>
+          <p class="hero-text">middle 1 page</p>
+
+          <div class="name-container">
+            <span class="welcome-text">WELCOME BACK</span>
+            <div id="nameDisplay">Loading...</div>
+          </div>
+        </article>
+
+        <aside class="hero-actions">
+          <div class="btn-group channel-btns">
+            <a href="chat1.html"><button class="btn">PLATFORM CHAT</button></a>
+             <a href="grades.html"><button class="btn">EXAMS GRADES</button></a>
+          </div>
+        </aside>
+
+      </section>
+    </main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAC1bNuWAD8noagHV2SD0y4PP0ABhxDdqo",
+  authDomain: "students-68430.firebaseapp.com",
+  projectId: "students-68430",
+  storageBucket: "students-68430.firebasestorage.app",
+  messagingSenderId: "202641775624",
+  appId: "1:202641775624:web:fe2d70e4ec92d62d5b85bd"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.goLogin = function(message){
+    if (message) {
+        alert(message);
+    }
+    localStorage.removeItem("savedCode");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("completedLessons");
+    window.location.href = "code.html";
+}
+
+async function checkUser(){
+    let code = new URLSearchParams(window.location.search).get("code");
+
+    if(!code){
+        code = localStorage.getItem("userId");
+    }
+
+    if(!code){
+        window.goLogin("Please enter your code first.");
+        return;
+    }
+
+    try {
+        const ref = doc(db, "students", code);
+        const snap = await getDoc(ref);
+
+        if(!snap.exists()){
+            window.goLogin("This code is wrong. Please try again.");
+            return;
+        }
+
+        const data = snap.data();
+
+        if(!data.active){
+            window.goLogin("Your code is not active.");
+            return;
+        }
+
+        const middle = Number(data.middle) || 1;
+        if (middle === 2) {
+            window.location.href = "p2.html?code=" + encodeURIComponent(code);
+            return;
+        } else if (middle === 3) {
+            window.location.href = "p3.html?code=" + encodeURIComponent(code);
+            return;
+        }
+
+        // عرض الاسم مع إضافة الرمز المخصص لولي الأمر إذا كان الدور "parents"
+        const currentRole = localStorage.getItem("userRole") || "students";
+        let displayName = data.name;
+
+        if (currentRole === "parents") {
+            displayName = "PR. " + displayName;
+        }
+
+        document.getElementById("nameDisplay").textContent = displayName;
+
+        localStorage.setItem("userName", displayName);
+        localStorage.setItem("userId", code);
+
+        if (data.completedLessons && Array.isArray(data.completedLessons)) {
+            localStorage.setItem("completedLessons", JSON.stringify(data.completedLessons));
+        } else {
+            localStorage.setItem("completedLessons", JSON.stringify([]));
+        }
+
+        if (window.location.search.includes("code=")) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    } catch (e) {
+        console.error("Firebase Error: ", e);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    checkUser();
+});
+</script>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sideMenu = document.getElementById('sideMenu');
+  const overlay = document.getElementById('menuOverlay');
+  const closeMenu = document.getElementById('closeMenu');
+
+  function openMenu() {
+    sideMenu.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenuPanel() {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenu) closeMenu.addEventListener('click', closeMenuPanel);
+  if (overlay) overlay.addEventListener('click', closeMenuPanel);
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') closeMenuPanel();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "AMR SAKR",
+  "description": "Best science education platform - Unlock the wonders of science",
+  "url": "https://diaaabdelhady-maker.github.io/sakr-platform",
+  "logo": "https://diaaabdelhady-maker.github.io/sakr-platform/logo.png",
+  "sameAs": [
+    "https://twitter.com/amrsakr",
+    "https://facebook.com/amrsakr",
+    "https://instagram.com/amrsakr"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-XXX-XXX-XXXX",
+    "contactType": "Customer Service",
+    "email": "support@amrsakr.com"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US",
+    "addressRegion": "State",
+    "postalCode": "00000"
+  },
+  "potentialAction": {
+    "@type": "JoinAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://amrsakr.com/signup.html",
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform"
+      ]
+    }
+  },
+  "offers": [
+    {
+      "@type": "Course",
+      "name": "Science Course 1",
+      "description": "Comprehensive science education course",
+      "url": "https://diaaabdelhady-maker.github.io/sakr-platform/course1.html"
+    }
+  ]
+}

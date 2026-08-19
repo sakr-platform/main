@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    <title>SECURE ACCESS | CHECKING CODE</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow: hidden;
+            /* الخلفية الفاتحة والمشرقة الأصلية */
+            background:
+                radial-gradient(circle at top, rgba(255,255,255,0.20), transparent 14%),
+                radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.15), transparent 18%),
+                radial-gradient(circle at 85% 0%, rgba(124, 58, 237, 0.25), transparent 22%),
+                linear-gradient(145deg, #04043b 0%, #06066b 30%, #01011f 65%, #00000e 100%);
+            color: #fff;
+            /* تطبيق خط Share Tech على الصفحة بالكامل */
+            font-family: 'Share Tech', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* شاشة التحميل الاحترافية */
+        .loading-container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 450px;
+            padding: 55px 40px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* منطقة اللوجو والحلقات المضيئة */
+        .logo-wrapper {
+            position: relative;
+            width: 210px;
+            height: 210px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .logo-img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* الحلقات الدوارة */
+        .ring-outer {
+            position: absolute;
+            width: 195px;
+            height: 195px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top: 3px solid #ffd700;
+            border-right: 3px solid rgba(255, 215, 0, 0.2);
+            animation: spin-clockwise 1.8s cubic-bezier(0.4, 0.1, 0.3, 1) infinite;
+            z-index: 2;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+        }
+
+        .ring-inner {
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+            animation: spin-counter 3s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes spin-clockwise {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-counter {
+            100% { transform: rotate(-360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.03); filter: brightness(1.1); }
+        }
+
+        /* التعديل لتطبيق خط Share Tech والـ Uppercase لجمال المظهر التكنولوجي */
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .loading-text {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+
+        /* شريط التحميل */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.06);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, #fff4a6, #ffd700, #fff4a6);
+            background-size: 200% 100%;
+            animation: 
+                load 4s cubic-bezier(0.1, 0.7, 0.1, 1) forwards,
+                shimmer 2s linear infinite;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.35), 0 0 25px rgba(255, 255, 255, 0.08);
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            15% { width: 25%; }
+            50% { width: 65%; }
+            85% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* الجزيئات الطائرة الخلفية */
+        .particle {
+            position: absolute;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3));
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.4;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(105vh) translateX(0) scale(0.6); opacity: 0; }
+            15% { opacity: 0.4; }
+            85% { opacity: 0.4; }
+            100% { transform: translateY(-5vh) translateX(20px) scale(1.2); opacity: 0; }
+        }
+    </style>
+    <!-- Settings System Initializer -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+</head>
+
+<body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+
+    <div class="ambient-glow">
+        <div class="particle" style="left:10%; width:3px; height:3px; animation-duration:7s;"></div>
+        <div class="particle" style="left:20%; width:3px; height:3px; animation-duration:9s;"></div>
+        <div class="particle" style="left:35%; width:3px; height:3px; animation-duration:6s;"></div>
+        <div class="particle" style="left:50%; width:3px; height:3px; animation-duration:10s;"></div>
+        <div class="particle" style="left:65%; width:3px; height:3px; animation-duration:8s;"></div>
+        <div class="particle" style="left:80%; width:3px; height:3px; animation-duration:12s;"></div>
+        <div class="particle" style="left:90%; width:3px; height:3px; animation-duration:7s;"></div>
+    </div>
+
+    <div class="loading-container">
+
+        <div class="logo-wrapper">
+            <div class="ring-outer"></div>
+            <div class="ring-inner"></div>
+            <img src="logo.png" class="logo-img" alt="Logo">
+        </div>
+
+        <div class="title">Verifying ID</div>
+        <div class="loading-text">Please wait a moment we are checking your ID is available</div>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAC1bNuWAD8noagHV2SD0y4PP0ABhxDdqo",
+            authDomain: "students-68430.firebaseapp.com",
+            projectId: "students-68430",
+            storageBucket: "students-68430.firebasestorage.app",
+            messagingSenderId: "202641775624",
+            appId: "1:202641775624:web:fe2d70e4ec92d62d5b85bd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+
+        if (!code) {
+            window.location.href = "code.html";
+        } else {
+            const studentRef = doc(db, "students", code);
+            const studentSnap = await getDoc(studentRef);
+
+            if (!studentSnap.exists()) {
+                alert("This code is wrong. Please try again.");
+                localStorage.removeItem("savedCode");
+                localStorage.removeItem("userId");
+                window.location.href = "code.html";
+            } else {
+                const data = studentSnap.data();
+
+                if (!data.active) {
+                    alert("Your code is not active.");
+                    localStorage.removeItem("savedCode");
+                    localStorage.removeItem("userId");
+                    window.location.href = "code.html";
+                } else {
+                    const middle = Number(data.middle) || 1;
+                    let target = "channel.html";
+
+                    if (middle === 2) {
+                        target = "channel2.html";
+                    } else if (middle === 3) {
+                        target = "channel3.html";
+                    }
+
+                    localStorage.setItem("userId", code);
+                    localStorage.setItem("userName", data.name || "Student");
+
+                    setTimeout(function () {
+                        window.location.href = target + "?code=" + encodeURIComponent(code);
+                    }, 4000);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

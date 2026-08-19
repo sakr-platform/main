@@ -1,0 +1,696 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0');
+
+body::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.22), transparent 12%),
+        radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.14), transparent 18%),
+        radial-gradient(circle at 80% 0%, rgba(124, 58, 237, 0.25), transparent 20%),
+        linear-gradient(145deg, #04043b 0%, #06066b 30%, #01011f 65%, #00000e 100%);
+    color: #fff;
+    font-family: "Share Tech", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding-top: 82px;
+}
+
+.hero-wrap {
+    width: min(100%, 560px);
+    margin: 0 auto;
+    padding: 18px 14px 44px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.hero-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 30px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 18px 14px 22px;
+}
+
+.hero-visual {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 24px;
+    padding: 18px 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.code-actions {
+    align-items: stretch;
+}
+
+.upbox {
+    background: linear-gradient(135deg, #ffe46b 0%, #ffd700 45%, #ffef99 100%);
+    width: 100%;
+    height: 74px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px 0 10px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 103);
+    font-size: 60px;
+    font-family: "Share Tech", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+    z-index: 999;
+}
+
+.brand-name {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.eyebrow {
+    margin: 4px 0 8px;
+    color: #ffe56b;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    margin: 4px 0 6px;
+    font-size: 30px;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.hero-text {
+    margin: 0 auto 8px;
+    max-width: 420px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+#logo {
+    border-radius: 1000px;
+}
+
+.upboxs {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.profile-button {
+    width: 58px;
+    height: 58px;
+    border: 2px solid rgba(255, 255, 255, 0.82);
+    border-radius: 50%;
+    background: linear-gradient(135deg, #07106b 0%, #0f1f9c 45%, #1b2ee2 100%);
+    color: #ffd700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+}
+
+.profile-button svg {
+    width: 28px;
+    height: 28px;
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.menu-btn:hover {
+    transform: translateY(-1px);
+}
+
+.menu-btn img {
+    width: 56px;
+    height: auto;
+    display: block;
+}
+
+.profile-popup {
+    position: fixed;
+    top: 88px;
+    right: 86px;
+    width: min(92vw, 400px);
+    background: linear-gradient(145deg, rgba(8, 15, 92, 0.98), rgba(4, 4, 59, 0.97));
+    color: #fff;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+    padding: 20px;
+    z-index: 1100;
+    display: none;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
+}
+
+.profile-popup::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.16), transparent 35%, rgba(255, 255, 255, 0.06));
+    pointer-events: none;
+}
+
+.profile-popup.show {
+    display: block;
+}
+
+.profile-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.profile-popup-header h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #ffd700;
+    letter-spacing: 0.7px;
+}
+
+.profile-close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.profile-info-line {
+    margin: 9px 0;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.profile-recovery-wrap {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.profile-email-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.profile-email-row span {
+    flex: 1;
+    font-size: 15px;
+    word-break: break-all;
+    color: #ffe58f;
+}
+
+.profile-icon-btn,
+.profile-secondary-btn {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.18), rgba(255, 255, 255, 0.14));
+    color: #fff;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 10px;
+    padding: 10px 13px;
+    cursor: pointer;
+    font-family: 'Share Tech', sans-serif;
+}
+
+.profile-icon-btn {
+    padding: 8px 10px;
+    font-size: 15px;
+    min-width: 38px;
+}
+
+.profile-recovery-form {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.profile-recovery-form.open {
+    display: flex;
+}
+
+.profile-recovery-form input {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.09);
+    color: #fff;
+    font-family: 'Share Tech', sans-serif;
+}
+
+.profile-recovery-form input::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.profile-btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.profile-btn-row button {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-family: 'Share Tech', sans-serif;
+}
+
+.profile-primary-btn {
+    background: linear-gradient(135deg, #fff7c5 0%, #ffd700 45%, #ffbb00 100%);
+    color: #04043b;
+}
+
+.profile-message {
+    display: none;
+    margin-top: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.profile-message.success {
+    display: block;
+    background: rgba(76, 175, 80, 0.22);
+    color: #b9ffbf;
+}
+
+.profile-message.error {
+    display: block;
+    background: rgba(244, 67, 54, 0.2);
+    color: #ffb5b5;
+}
+
+.auth-card {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.auth-form input {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-family: 'Share Tech', sans-serif;
+}
+
+.auth-form input::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.auth-submit {
+    margin-top: 4px;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    background: linear-gradient(135deg, #fff7c5 0%, #ffd700 45%, #ffbb00 100%);
+    color: #04043b;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    font-family: 'Share Tech', sans-serif;
+}
+
+.auth-message {
+    margin-top: 12px;
+    font-size: 14px;
+    font-family: 'Share Tech', sans-serif;
+}
+
+.auth-message.error {
+    color: #ffb5b5;
+}
+
+@media (max-width: 850px) {
+    .upbox {
+        height: auto;
+        min-height: 70px;
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .upbox img {
+        width: 58px;
+        height: auto;
+    }
+
+    .brand-name {
+        font-size: 42px;
+    }
+
+    .menu-btn img {
+        width: 44px;
+        height: auto;
+    }
+
+    #mlogo {
+        width: 280px;
+    }
+
+    .hh {
+        position: fixed;
+        left: 20px;
+    }
+
+
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.menu-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -340px;
+    width: 300px;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffd700, #ffea70);
+    color: rgb(0, 0, 103);
+    box-shadow: -8px 0 20px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1001;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+}
+
+.side-menu.open {
+    right: 0;
+}
+
+.close-menu {
+    background: transparent;
+    border: none;
+    color: rgb(0, 0, 103);
+    font-size: 36px;
+    cursor: pointer;
+    float: right;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.side-menu h2 {
+    margin: 10px 0 30px;
+    font-size: 28px;
+}
+
+.side-menu a {
+    display: block;
+    color: rgb(0, 0, 103);
+    text-decoration: none;
+    font-size: 22px;
+    margin: 14px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 103, 0.22);
+    transition: padding-left 0.2s ease;
+}
+
+.side-menu a:hover {
+    padding-left: 8px;
+}
+
+.side-menu a .menu-icon {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+    font-size: 20px;
+    line-height: 1;
+}
+
+
+
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 18px;
+    width: 100%;
+}
+
+.btn {
+    background: linear-gradient(135deg, #fff7c5 0%, #ffd700 45%, #ffbb00 100%);
+    color: rgb(0, 0, 103);
+    width: 100%;
+    max-width: 420px;
+    min-height: 72px;
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    border-radius: 18px;
+    font-size: 24px;
+    font-family: "Share Tech", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0 auto;
+    margin-top: 5px;
+    cursor: pointer;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #0b0b7a, #1010a0);
+    color: rgb(255, 240, 180);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+#mlogo {
+    width: min(82vw, 350px);
+    height: auto;
+    display: block;
+    margin: 0 auto 6px;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22));
+}
+
+.code-card {
+    padding-bottom: 28px;
+}
+
+.code-label {
+    display: block;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 15px;
+    margin: 8px auto 6px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.code-input {
+    width: 100%;
+    max-width: 420px;
+    min-height: 52px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    padding: 0 14px;
+    box-sizing: border-box;
+    font: inherit;
+    margin: 0 auto 10px;
+}
+
+.code-input::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.code-note {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+@media (min-width: 851px) {
+    .hero-wrap {
+        width: min(100%, 1100px);
+    }
+
+    .hero-card.hero-split {
+        display: flex;
+        align-items: stretch;
+        gap: 24px;
+        text-align: left;
+        padding: 20px;
+    }
+
+    .hero-card.hero-split .hero-visual {
+        flex: 1.05;
+        min-width: 0;
+    }
+
+    .hero-card.hero-split .hero-actions {
+        flex: 0.95;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .hero-card.hero-split .hero-actions .btn-group {
+        margin-top: 0;
+        max-width: 420px;
+    }
+
+    .hero-card.hero-split .hero-actions .btn {
+        max-width: none;
+    }
+
+    .hero-card.hero-split .hero-visual .eyebrow,
+    .hero-card.hero-split .hero-visual .hero-title,
+    .hero-card.hero-split .hero-visual .hero-text {
+        text-align: center;
+    }
+
+    .hero-card.hero-split .code-actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .btn {
+        min-height: 64px;
+        font-size: 22px;
+        border-radius: 16px;
+    }
+
+    .hero-card {
+        padding: 18px 14px 24px;
+    }
+}
+
+@media (max-width: 850px) {
+    body {
+        padding-top: 76px;
+    }
+
+    .upbox {
+        height: auto;
+        min-height: 70px;
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .upbox img {
+        width: 56px;
+        height: auto;
+    }
+
+    .brand-name {
+        font-size: 24px;
+    }
+
+    .menu-btn img {
+        width: 44px;
+        height: auto;
+    }
+
+    .profile-popup {
+        right: 12px;
+        left: 12px;
+        width: auto;
+        top: 80px;
+    }
+
+    #mlogo {
+        width: 260px;
+    }
+
+    .btn {
+        min-height: 60px;
+        font-size: 20px;
+        border-radius: 14px;
+    }
+
+    .hero-title {
+        font-size: 26px;
+    }
+
+    .hero-text {
+        font-size: 15px;
+    }
+}
