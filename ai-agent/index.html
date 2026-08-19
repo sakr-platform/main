@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <h1>مساعد الذكاء الاصطناعي</h1>
+    <p class="subtitle">اسألني عن أي موضوع و سأساعدك فوراً</p>
+  </div>
+
+  <button id="chatToggleBtn" class="fab" type="button">💬</button>
+
+  <div id="chatPanel" class="chat-panel">
+    <div class="chat-header">
+      <div>
+        <h3>AI Agent</h3>
+        <p>مساعد ذكي من Mistral</p>
+      </div>
+      <button id="chatCloseBtn" class="close-btn" type="button">×</button>
+    </div>
+
+    <div id="messages" class="messages"></div>
+
+    <form id="chatForm" class="chat-form">
+      <input id="messageInput" type="text" placeholder="اكتب سؤالك هنا..." autocomplete="off" />
+      <button type="submit">إرسال</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
