@@ -415,6 +415,10 @@
                 <option value="3">Middle 3</option>
               </select>
 
+              <select id="studentGroup" class="admin-input" style="background: rgba(0,0,0,0.4); color: #fff;" required>
+                <option value="" disabled selected>Loading groups...</option>
+              </select>
+
               <div class="file-upload-wrapper">
                 <span class="file-upload-label">Profile Picture</span>
                 <label for="imageInput" class="custom-file-btn">
@@ -524,7 +528,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAC1bNuWAD8noagHV2SD0y4PP0ABhxDdqo",
@@ -550,6 +554,37 @@ const avatarPreview = document.getElementById("avatarPreview");
 
 const currentStudentId = localStorage.getItem("temp_student_id");
 const signupExpired = localStorage.getItem("signup_expired") === "true";
+
+async function loadGroups() {
+  const groupSelect = document.getElementById("studentGroup");
+  const snapshot = await getDocs(collection(db, "groups"));
+  const groups = [];
+
+  snapshot.forEach((groupDoc) => {
+    const data = groupDoc.data();
+    if (data.active !== false) {
+      groups.push({ id: groupDoc.id, name: data.name || "Unnamed Group" });
+    }
+  });
+
+  groups.sort((first, second) => first.name.localeCompare(second.name));
+  groupSelect.innerHTML = '<option value="" disabled selected>Select Group</option>';
+  groups.forEach((group) => {
+    const option = document.createElement("option");
+    option.value = group.id;
+    option.textContent = group.name;
+    groupSelect.appendChild(option);
+  });
+
+  if (groups.length === 0) {
+    groupSelect.innerHTML = '<option value="" disabled selected>No groups available</option>';
+  }
+}
+
+loadGroups().catch((error) => {
+  console.error("Unable to load groups", error);
+  document.getElementById("studentGroup").innerHTML = '<option value="" disabled selected>Unable to load groups</option>';
+});
 
 if (signupExpired) {
   showSection("expiredSection");
@@ -610,6 +645,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const studentPhone = document.getElementById("studentPhone").value.trim();
   const parentPhone = document.getElementById("parentPhone").value.trim();
   const middle = Number(document.getElementById("studentMiddle").value);
+  const group = document.getElementById("studentGroup").value;
 
   const id = generateId();
   const parentId = generateId();
@@ -622,6 +658,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       phone: parentPhone,
       studentPhone: studentPhone,
       middle: middle,
+      group: group,
       profilePic: croppedBase64 || "",
       active: false,
       approved: false
