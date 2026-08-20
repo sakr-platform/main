@@ -555,19 +555,28 @@ const avatarPreview = document.getElementById("avatarPreview");
 const currentStudentId = localStorage.getItem("temp_student_id");
 const signupExpired = localStorage.getItem("signup_expired") === "true";
 
-async function loadGroups() {
+async function loadGroups(selectedMiddle = null) {
   const groupSelect = document.getElementById("studentGroup");
+  const middleSelect = document.getElementById("studentMiddle");
+  const activeMiddle = Number(selectedMiddle ?? middleSelect?.value ?? 0) || null;
   const snapshot = await getDocs(collection(db, "groups"));
   const groups = [];
 
   snapshot.forEach((groupDoc) => {
     const data = groupDoc.data();
-    if (data.active !== false) {
-      groups.push({ id: groupDoc.id, name: data.name || "Unnamed Group" });
+    const groupMiddle = Number(data.middle) || 1;
+    if (data.active !== false && (!activeMiddle || groupMiddle === activeMiddle)) {
+      groups.push({ id: groupDoc.id, name: data.name || "Unnamed Group", middle: groupMiddle });
     }
   });
 
   groups.sort((first, second) => first.name.localeCompare(second.name));
+
+  if (!activeMiddle) {
+    groupSelect.innerHTML = '<option value="" disabled selected>Select Middle Grade first</option>';
+    return;
+  }
+
   groupSelect.innerHTML = '<option value="" disabled selected>Select Group</option>';
   groups.forEach((group) => {
     const option = document.createElement("option");
@@ -577,8 +586,15 @@ async function loadGroups() {
   });
 
   if (groups.length === 0) {
-    groupSelect.innerHTML = '<option value="" disabled selected>No groups available</option>';
+    groupSelect.innerHTML = `<option value="" disabled selected>No groups available for Middle ${activeMiddle}</option>`;
   }
+}
+
+const studentMiddleSelect = document.getElementById("studentMiddle");
+if (studentMiddleSelect) {
+  studentMiddleSelect.addEventListener("change", () => {
+    loadGroups(studentMiddleSelect.value);
+  });
 }
 
 loadGroups().catch((error) => {
@@ -766,26 +782,32 @@ window.copyText = function(elemId) {
   alert("Copied: " + text);
 };
 
-document.getElementById("copyAllBtn").addEventListener("click", () => {
-  const name = document.getElementById("resName").innerText;
-  const sid = document.getElementById("resStudentId").innerText;
-  const pid = document.getElementById("resParentId").innerText;
-  const grade = document.getElementById("resGrade").innerText;
+const copyAllBtn = document.getElementById("copyAllBtn");
+if (copyAllBtn) {
+  copyAllBtn.addEventListener("click", () => {
+    const name = document.getElementById("resName").innerText;
+    const sid = document.getElementById("resStudentId").innerText;
+    const pid = document.getElementById("resParentId").innerText;
+    const grade = document.getElementById("resGrade").innerText;
 
-  const fullText = `AMR SAKR ACCOUNT INFO\nName: ${name}\nStudent ID: ${sid}\nParent ID: ${pid}\nGrade: ${grade}`;
-  navigator.clipboard.writeText(fullText);
-  alert("Account details copied to clipboard!");
-});
+    const fullText = `AMR SAKR ACCOUNT INFO\nName: ${name}\nStudent ID: ${sid}\nParent ID: ${pid}\nGrade: ${grade}`;
+    navigator.clipboard.writeText(fullText);
+    alert("Account details copied to clipboard!");
+  });
+}
 
-document.getElementById("expireNowBtn").addEventListener("click", () => {
-  localStorage.setItem("signup_expired", "true");
-  localStorage.removeItem("temp_student_id");
-  const currentId = document.getElementById("resStudentId").innerText;
-  if (currentId) {
-    localStorage.removeItem("expire_time_" + currentId);
-  }
-  showSection("expiredSection");
-});
+const expireNowBtn = document.getElementById("expireNowBtn");
+if (expireNowBtn) {
+  expireNowBtn.addEventListener("click", () => {
+    localStorage.setItem("signup_expired", "true");
+    localStorage.removeItem("temp_student_id");
+    const currentId = document.getElementById("resStudentId").innerText;
+    if (currentId) {
+      localStorage.removeItem("expire_time_" + currentId);
+    }
+    showSection("expiredSection");
+  });
+}
 </script>
 </body>
 </html>
