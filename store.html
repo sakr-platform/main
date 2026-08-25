@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b0d12">
+<meta name="description" content="Diaa Abdelhady — Front-End Developer, Builder and Student Developer">
+<title>Diaa Abdelhady — Front-End Developer</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root{
+ --bg:#090b0f;
+ --bg2:#0e1117;
+ --card:#11151c;
+ --card2:#151a22;
+ --text:#f2f4f7;
+ --muted:#8d96a5;
+ --line:rgba(255,255,255,.09);
+ --lime:#d7ff45;
+ --cyan:#52e5ff;
+ --orange:#ff9d5c;
+ --radius:25px;
+}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+html{
+ scroll-behavior:smooth;
+}
+
+body{
+ background:
+ radial-gradient(circle at 10% 10%,rgba(215,255,69,.055),transparent 27%),
+ radial-gradient(circle at 90% 30%,rgba(82,229,255,.045),transparent 28%),
+ var(--bg);
+ color:var(--text);
+ font-family:Cairo,Arial,sans-serif;
+ overflow-x:hidden;
+}
+
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ opacity:.025;
+ z-index:9999;
+ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+a{
+ color:inherit;
+ text-decoration:none;
+}
+
+button{
+ font:inherit;
+}
+
+::selection{
+ background:var(--lime);
+ color:#10120c;
+}
+
+/* CURSOR */
+
+.cursor{
+ position:fixed;
+ width:12px;
+ height:12px;
+ border-radius:50%;
+ background:var(--lime);
+ pointer-events:none;
+ z-index:10000;
+ transform:translate(-50%,-50%);
+ mix-blend-mode:difference;
+}
+
+.cursor-ring{
+ position:fixed;
+ width:38px;
+ height:38px;
+ border:1px solid rgba(215,255,69,.6);
+ border-radius:50%;
+ pointer-events:none;
+ z-index:9999;
+ transform:translate(-50%,-50%);
+ transition:width .25s,height .25s;
+}
+
+/* LOADER */
+
+.loader{
+ position:fixed;
+ inset:0;
+ z-index:20000;
+ background:#080a0e;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ transition:opacity .8s,visibility .8s;
+}
+
+.loader.hide{
+ opacity:0;
+ visibility:hidden;
+}
+
+.loader-inner{
+ text-align:center;
+}
+
+.loader-code{
+ font-family:"Space Grotesk",monospace;
+ color:var(--lime);
+ font-size:clamp(30px,6vw,70px);
+ font-weight:700;
+ letter-spacing:-4px;
+}
+
+.loader-line{
+ width:230px;
+ height:2px;
+ background:#222832;
+ margin:25px auto 0;
+ overflow:hidden;
+}
+
+.loader-line span{
+ display:block;
+ height:100%;
+ width:0;
+ background:var(--lime);
+ animation:load 1.5s forwards;
+}
+
+@keyframes load{
+ to{width:100%}
+}
+
+/* BACKGROUND */
+
+.grid{
+ position:fixed;
+ inset:0;
+ z-index:-2;
+ opacity:.28;
+ background-image:
+ linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+ background-size:65px 65px;
+ mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+
+.orb{
+ position:fixed;
+ width:500px;
+ height:500px;
+ border-radius:50%;
+ filter:blur(100px);
+ opacity:.055;
+ pointer-events:none;
+ z-index:-1;
+}
+
+.orb.one{
+ background:var(--lime);
+ top:-250px;
+ right:-200px;
+}
+
+.orb.two{
+ background:var(--cyan);
+ bottom:-300px;
+ left:-220px;
+}
+
+/* NAV */
+
+nav{
+ position:fixed;
+ top:0;
+ left:0;
+ right:0;
+ height:82px;
+ z-index:1000;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 5vw;
+ background:rgba(9,11,15,.62);
+ backdrop-filter:blur(20px);
+ border-bottom:1px solid transparent;
+ transition:.35s;
+}
+
+nav.scrolled{
+ border-bottom-color:var(--line);
+ background:rgba(9,11,15,.88);
+}
+
+.logo{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-family:"Space Grotesk",sans-serif;
+ font-weight:800;
+ direction:ltr;
+}
+
+.logo-mark{
+ width:34px;
+ height:34px;
+ border:2px solid var(--lime);
+ display:grid;
+ place-items:center;
+ transform:rotate(45deg);
+}
+
+.logo-mark span{
+ transform:rotate(-45deg);
+ color:var(--lime);
+}
+
+.nav-links{
+ display:flex;
+ gap:30px;
+ list-style:none;
+}
+
+.nav-links a{
+ color:var(--muted);
+ font-size:14px;
+ transition:.25s;
+}
+
+.nav-links a:hover{
+ color:var(--text);
+}
+
+.nav-right{
+ display:flex;
+ gap:10px;
+ align-items:center;
+}
+
+.lang{
+ background:transparent;
+ border:1px solid var(--line);
+ color:var(--text);
+ padding:8px 12px;
+ border-radius:100px;
+ cursor:pointer;
+}
+
+.menu{
+ display:none;
+ border:0;
+ background:none;
+ color:white;
+ font-size:25px;
+ cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+ min-height:100vh;
+ padding:150px 7vw 80px;
+ display:grid;
+ grid-template-columns:1.2fr .8fr;
+ align-items:center;
+ gap:70px;
+ position:relative;
+}
+
+.hero-copy{
+ position:relative;
+}
+
+.eyebrow{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ color:var(--lime);
+ font-size:13px;
+ letter-spacing:2px;
+ font-family:"Space Grotesk",sans-serif;
+ direction:ltr;
+ margin-bottom:25px;
+}
+
+.eyebrow:before{
+ content:"";
+ width:42px;
+ height:1px;
+ background:var(--lime);
+}
+
+.hero h1{
+ font-size:clamp(55px,9vw,125px);
+ line-height:.88;
+ letter-spacing:-6px;
+ font-weight:900;
+ margin-bottom:30px;
+}
+
+.hero h1 .outline{
+ color:transparent;
+ -webkit-text-stroke:1px rgba(255,255,255,.6);
+}
+
+.hero h1 .lime{
+ color:var(--lime);
+}
+
+.hero-desc{
+ max-width:630px;
+ color:#aeb5c0;
+ font-size:18px;
+ line-height:2;
+ margin-bottom:38px;
+}
+
+.hero-actions{
+ display:flex;
+ gap:12px;
+ flex-wrap:wrap;
+}
+
+.primary{
+ display:inline-flex;
+ align-items:center;
+ gap:10px;
+ padding:14px 22px;
+ border-radius:100px;
+ background:var(--lime);
+ color:#0b0d09;
+ font-weight:800;
+ transition:.3s;
+}
+
+.primary:hover{
+ transform:translateY(-4px);
+ box-shadow:0 14px 35px rgba(215,255,69,.15);
+}
+
+.secondary{
+ display:inline-flex;
+ align-items:center;
+ gap:10px;
+ padding:14px 22px;
+ border:1px solid var(--line);
+ border-radius:100px;
+ color:#d7dbe1;
+ transition:.3s;
+}
+
+.secondary:hover{
+ border-color:rgba(255,255,255,.3);
+ transform:translateY(-4px);
+}
+
+/* HERO VISUAL */
+
+.hero-visual{
+ min-height:500px;
+ position:relative;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+}
+
+.code-card{
+ width:min(470px,100%);
+ background:rgba(17,21,28,.82);
+ border:1px solid var(--line);
+ border-radius:28px;
+ padding:0;
+ box-shadow:0 30px 90px rgba(0,0,0,.35);
+ transform:rotate(3deg);
+ transition:transform .5s;
+ overflow:hidden;
+}
+
+.code-card:hover{
+ transform:rotate(0deg) translateY(-8px);
+}
+
+.window{
+ height:48px;
+ border-bottom:1px solid var(--line);
+ display:flex;
+ align-items:center;
+ padding:0 17px;
+ gap:7px;
+ direction:ltr;
+}
+
+.dot{
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#363d48;
+}
+
+.window-title{
+ margin-left:auto;
+ margin-right:auto;
+ font:12px "Space Grotesk",monospace;
+ color:#687181;
+}
+
+.code{
+ padding:28px;
+ font:14px/2 "Space Grotesk",monospace;
+ direction:ltr;
+ text-align:left;
+ color:#cbd2dc;
+}
+
+.code .pink{color:#ff83bd}
+.code .blue{color:#76c7ff}
+.code .green{color:#b8ef68}
+.code .yellow{color:#ffd477}
+.code .gray{color:#657080}
+
+.float-tag{
+ position:absolute;
+ padding:11px 16px;
+ border:1px solid var(--line);
+ background:rgba(15,18,24,.88);
+ backdrop-filter:blur(12px);
+ border-radius:14px;
+ font:12px "Space Grotesk",monospace;
+ box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.tag-one{
+ top:10%;
+ right:-4%;
+ animation:float1 4s ease-in-out infinite;
+}
+
+.tag-two{
+ bottom:9%;
+ left:-5%;
+ animation:float2 5s ease-in-out infinite;
+}
+
+@keyframes float1{
+ 50%{transform:translateY(-13px) rotate(-3deg)}
+}
+
+@keyframes float2{
+ 50%{transform:translateY(12px) rotate(3deg)}
+}
+
+/* TICKER */
+
+.ticker{
+ overflow:hidden;
+ border-top:1px solid var(--line);
+ border-bottom:1px solid var(--line);
+ padding:15px 0;
+ transform:rotate(-1deg) scale(1.02);
+ background:#0c1015;
+}
+
+.ticker-track{
+ display:flex;
+ width:max-content;
+ animation:ticker 28s linear infinite;
+}
+
+.ticker-item{
+ display:flex;
+ align-items:center;
+ gap:30px;
+ padding:0 30px;
+ font-family:"Space Grotesk",sans-serif;
+ font-size:14px;
+ color:#788291;
+ white-space:nowrap;
+}
+
+.ticker-item b{
+ color:var(--lime);
+}
+
+@keyframes ticker{
+ to{transform:translateX(-50%)}
+}
+
+/* SECTIONS */
+
+section{
+ padding:130px 7vw;
+ position:relative;
+}
+
+.section-head{
+ display:flex;
+ align-items:end;
+ justify-content:space-between;
+ gap:30px;
+ margin-bottom:60px;
+}
+
+.section-number{
+ font:14px "Space Grotesk",monospace;
+ color:var(--lime);
+ direction:ltr;
+}
+
+.section-title{
+ font-size:clamp(42px,6vw,78px);
+ line-height:.95;
+ letter-spacing:-4px;
+ font-weight:900;
+}
+
+.section-note{
+ max-width:360px;
+ color:var(--muted);
+ line-height:1.9;
+}
+
+/* ABOUT */
+
+.about-layout{
+ display:grid;
+ grid-template-columns:.8fr 1.2fr;
+ gap:80px;
+}
+
+.about-stamp{
+ border:1px solid var(--line);
+ border-radius:50%;
+ width:260px;
+ height:260px;
+ display:grid;
+ place-items:center;
+ margin:auto;
+ position:relative;
+}
+
+.about-stamp:before{
+ content:"DIAA • 2026 • FRONTEND • ";
+ position:absolute;
+ inset:13px;
+ border:1px dashed #39404b;
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ font:11px "Space Grotesk",monospace;
+ color:#66707e;
+ animation:spin 20s linear infinite;
+}
+
+.stamp-center{
+ width:120px;
+ height:120px;
+ border-radius:50%;
+ background:var(--lime);
+ color:#10120b;
+ display:grid;
+ place-items:center;
+ font:800 36px "Space Grotesk",sans-serif;
+ transform:rotate(-8deg);
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+
+.about-text{
+ font-size:20px;
+ line-height:2.1;
+ color:#c3c9d1;
+}
+
+.about-text strong{
+ color:white;
+}
+
+.about-stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ margin-top:45px;
+}
+
+.stat{
+ border-top:1px solid var(--line);
+ padding-top:20px;
+}
+
+.stat b{
+ display:block;
+ font:700 34px "Space Grotesk",sans-serif;
+ color:var(--lime);
+ direction:ltr;
+}
+
+.stat span{
+ color:var(--muted);
+ font-size:13px;
+}
+
+/* SKILLS */
+
+.skills-wrap{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:70px;
+}
+
+.skill{
+ padding:22px 0;
+ border-bottom:1px solid var(--line);
+}
+
+.skill-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:12px;
+}
+
+.skill-name{
+ font-weight:700;
+}
+
+.skill-type{
+ color:#626c7a;
+ font:11px "Space Grotesk",monospace;
+ direction:ltr;
+}
+
+.skill-bar{
+ height:3px;
+ background:#242a33;
+ overflow:hidden;
+}
+
+.skill-bar span{
+ display:block;
+ height:100%;
+ width:0;
+ background:var(--lime);
+ transition:width 1.4s cubic-bezier(.2,.8,.2,1);
+}
+
+/* PROJECTS */
+
+.projects{
+ display:grid;
+ grid-template-columns:repeat(12,1fr);
+ gap:18px;
+}
+
+.project{
+ position:relative;
+ min-height:360px;
+ border:1px solid var(--line);
+ border-radius:var(--radius);
+ overflow:hidden;
+ background:var(--card);
+ padding:30px;
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+ transition:.5s cubic-bezier(.2,.8,.2,1);
+}
+
+.project:hover{
+ transform:translateY(-10px);
+ border-color:rgba(215,255,69,.3);
+}
+
+.project:nth-child(1){
+ grid-column:span 7;
+ background:
+ radial-gradient(circle at 90% 10%,rgba(215,255,69,.12),transparent 30%),
+ var(--card);
+}
+
+.project:nth-child(2){
+ grid-column:span 5;
+}
+
+.project:nth-child(3){
+ grid-column:span 5;
+}
+
+.project:nth-child(4){
+ grid-column:span 7;
+ background:
+ radial-gradient(circle at 10% 80%,rgba(82,229,255,.09),transparent 35%),
+ var(--card);
+}
+
+.project-number{
+ font:12px "Space Grotesk",monospace;
+ color:#657080;
+ direction:ltr;
+}
+
+.project h3{
+ font-size:clamp(27px,4vw,46px);
+ line-height:1;
+ letter-spacing:-2px;
+ margin:25px 0 15px;
+}
+
+.project p{
+ color:#89929f;
+ line-height:1.8;
+ max-width:650px;
+}
+
+.project-bottom{
+ display:flex;
+ align-items:end;
+ justify-content:space-between;
+ gap:15px;
+ margin-top:35px;
+}
+
+.tags{
+ display:flex;
+ flex-wrap:wrap;
+ gap:7px;
+}
+
+.tags span{
+ border:1px solid var(--line);
+ padding:5px 9px;
+ border-radius:100px;
+ font:10px "Space Grotesk",monospace;
+ color:#929aa6;
+ direction:ltr;
+}
+
+.project-arrow{
+ width:48px;
+ height:48px;
+ flex:none;
+ border:1px solid var(--line);
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ transition:.35s;
+ direction:ltr;
+}
+
+.project:hover .project-arrow{
+ background:var(--lime);
+ color:#0a0c09;
+ transform:rotate(-45deg);
+}
+
+/* PROCESS */
+
+.process{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ border-top:1px solid var(--line);
+ border-bottom:1px solid var(--line);
+}
+
+.process-item{
+ min-height:250px;
+ padding:35px;
+ border-left:1px solid var(--line);
+ position:relative;
+ transition:.3s;
+}
+
+.process-item:first-child{
+ border-left:0;
+}
+
+.process-item:hover{
+ background:#10151b;
+}
+
+.process-item b{
+ font:12px "Space Grotesk",monospace;
+ color:var(--lime);
+ direction:ltr;
+}
+
+.process-item h3{
+ margin:60px 0 12px;
+ font-size:22px;
+}
+
+.process-item p{
+ color:#747e8c;
+ font-size:13px;
+ line-height:1.9;
+}
+
+/* PHILOSOPHY */
+
+.quote{
+ max-width:1100px;
+ margin:auto;
+ position:relative;
+}
+
+.quote-mark{
+ font:160px Georgia,serif;
+ color:var(--lime);
+ line-height:.4;
+ opacity:.6;
+}
+
+.quote-text{
+ font-size:clamp(32px,5vw,68px);
+ line-height:1.25;
+ letter-spacing:-2px;
+ font-weight:800;
+}
+
+.quote-text em{
+ color:var(--lime);
+ font-style:normal;
+}
+
+.quote-by{
+ margin-top:30px;
+ color:#657080;
+ font:13px "Space Grotesk",monospace;
+ direction:ltr;
+}
+
+/* LANGUAGES */
+
+.language-panel{
+ border:1px solid var(--line);
+ border-radius:30px;
+ padding:35px;
+ display:grid;
+ grid-template-columns:1fr 2fr;
+ gap:40px;
+ background:linear-gradient(120deg,#11151b,#0c1015);
+}
+
+.language-current{
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+}
+
+.language-current small{
+ color:#697380;
+ font:11px "Space Grotesk",monospace;
+}
+
+.language-current strong{
+ font-size:clamp(35px,5vw,65px);
+ margin:10px 0;
+}
+
+.language-current span{
+ color:var(--lime);
+}
+
+.lang-list{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+}
+
+.lang-btn{
+ background:#161b22;
+ color:#919aa7;
+ border:1px solid transparent;
+ padding:15px;
+ border-radius:12px;
+ cursor:pointer;
+ transition:.25s;
+}
+
+.lang-btn:hover,
+.lang-btn.active{
+ color:#fff;
+ border-color:var(--lime);
+ background:#151a18;
+}
+
+/* CONTACT */
+
+.contact{
+ min-height:65vh;
+ display:grid;
+ place-items:center;
+ text-align:center;
+}
+
+.contact h2{
+ font-size:clamp(55px,10vw,130px);
+ line-height:.82;
+ letter-spacing:-7px;
+ margin-bottom:35px;
+}
+
+.contact h2 span{
+ color:var(--lime);
+}
+
+.contact p{
+ color:#818a97;
+ max-width:600px;
+ margin:0 auto 35px;
+ line-height:2;
+}
+
+/* WHATSAPP ONLY ONE */
+
+.whatsapp{
+ display:inline-flex;
+ align-items:center;
+ gap:12px;
+ background:#d7ff45;
+ color:#0b0d09;
+ border-radius:100px;
+ padding:15px 24px;
+ font-weight:900;
+ transition:.3s;
+}
+
+.whatsapp:hover{
+ transform:translateY(-5px) scale(1.02);
+ box-shadow:0 15px 45px rgba(215,255,69,.17);
+}
+
+.whatsapp-icon{
+ width:28px;
+ height:28px;
+ border-radius:50%;
+ border:2px solid #10130d;
+ display:grid;
+ place-items:center;
+ font-size:13px;
+}
+
+/* FOOTER */
+
+footer{
+ border-top:1px solid var(--line);
+ padding:30px 7vw;
+ display:flex;
+ justify-content:space-between;
+ gap:20px;
+ align-items:center;
+ color:#58616d;
+ font-size:12px;
+}
+
+.github{
+ direction:ltr;
+ font-family:"Space Grotesk",monospace;
+ transition:.2s;
+}
+
+.github:hover{
+ color:var(--lime);
+}
+
+/* REVEAL */
+
+.reveal{
+ opacity:0;
+ transform:translateY(35px);
+ transition:opacity .9s,transform .9s;
+}
+
+.reveal.show{
+ opacity:1;
+ transform:none;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+ nav{
+  padding:0 20px;
+ }
+
+ .nav-links{
+  position:absolute;
+  top:82px;
+  left:15px;
+  right:15px;
+  padding:20px;
+  background:#11151b;
+  border:1px solid var(--line);
+  border-radius:20px;
+  display:none;
+  flex-direction:column;
+ }
+
+ .nav-links.open{
+  display:flex;
+ }
+
+ .menu{
+  display:block;
+ }
+
+ .nav-right .lang{
+  display:none;
+ }
+
+ .hero{
+  grid-template-columns:1fr;
+  padding:135px 6vw 70px;
+ }
+
+ .hero h1{
+  letter-spacing:-4px;
+ }
+
+ .hero-visual{
+  min-height:430px;
+ }
+
+ .about-layout,
+ .skills-wrap,
+ .language-panel{
+  grid-template-columns:1fr;
+ }
+
+ .projects{
+  display:grid;
+  grid-template-columns:1fr;
+ }
+
+ .project,
+ .project:nth-child(n){
+  grid-column:auto;
+ }
+
+ .process{
+  grid-template-columns:1fr 1fr;
+ }
+
+ .process-item:nth-child(3){
+  border-left:0;
+ }
+
+ .process-item{
+  border-bottom:1px solid var(--line);
+ }
+
+ .section-head{
+  display:block;
+ }
+
+ .section-note{
+  margin-top:25px;
+ }
+
+ .lang-list{
+  grid-template-columns:repeat(2,1fr);
+ }
+}
+
+@media(max-width:560px){
+
+ .cursor,
+ .cursor-ring{
+  display:none;
+ }
+
+ section{
+  padding:90px 6vw;
+ }
+
+ .hero{
+  padding-left:6vw;
+  padding-right:6vw;
+ }
+
+ .hero h1{
+  font-size:58px;
+ }
+
+ .hero-desc{
+  font-size:16px;
+ }
+
+ .code-card{
+  transform:none;
+ }
+
+ .float-tag{
+  font-size:10px;
+ }
+
+ .tag-one{
+  right:-3px;
+ }
+
+ .tag-two{
+  left:-3px;
+ }
+
+ .about-stamp{
+  width:210px;
+  height:210px;
+ }
+
+ .about-stats{
+  grid-template-columns:1fr;
+ }
+
+ .process{
+  grid-template-columns:1fr;
+ }
+
+ .process-item,
+ .process-item:nth-child(3){
+  border-left:0;
+ }
+
+ .contact h2{
+  font-size:60px;
+  letter-spacing:-4px;
+ }
+
+ footer{
+  flex-direction:column;
+  text-align:center;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader">
+ <div class="loader-inner">
+  <div class="loader-code">&lt;diaa /&gt;</div>
+  <div class="loader-line"><span></span></div>
+ </div>
+</div>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<div class="grid"></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<nav id="nav">
+ <a href="#home" class="logo">
+  <div class="logo-mark"><span>D</span></div>
+  <span>DIAA</span>
+ </a>
+
+ <ul class="nav-links" id="navLinks">
+  <li><a href="#about" data-i18n="navAbout">عني</a></li>
+  <li><a href="#skills" data-i18n="navSkills">المهارات</a></li>
+  <li><a href="#projects" data-i18n="navProjects">المشاريع</a></li>
+  <li><a href="#process" data-i18n="navProcess">طريقة عملي</a></li>
+ </ul>
+
+ <div class="nav-right">
+  <button class="lang" id="langTop">EN</button>
+  <button class="menu" id="menu">☰</button>
+ </div>
+</nav>
+
+<main>
+
+<section class="hero" id="home">
+
+ <div class="hero-copy reveal">
+
+  <div class="eyebrow">FRONT-END DEVELOPER / BUILDER</div>
+
+  <h1>
+   <span data-i18n="heroHi">أنا</span><br>
+   <span class="outline">ضياء</span><br>
+   <span class="lime">عبدالهادي.</span>
+  </h1>
+
+  <p class="hero-desc" data-i18n="heroDesc">
+   مبرمج Front-End وطالب بحب أبني حاجات حقيقية من الصفر.
+   بتعلم، بجرب، وبحوّل الأفكار لمواقع وتطبيقات شغالة فعلاً.
+  </p>
+
+  <div class="hero-actions">
+   <a href="#projects" class="primary">
+    <span data-i18n="seeWork">شوف شغلي</span>
+    <span>↙</span>
+   </a>
+
+   <a href="https://github.com/diaaabdelhady22" target="_blank" class="secondary">
+    GitHub ↗
+   </a>
+  </div>
+
+ </div>
+
+ <div class="hero-visual reveal">
+
+  <div class="code-card">
+
+   <div class="window">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="window-title">diaa.config.js</span>
+   </div>
+
+   <div class="code">
+    <div><span class="pink">const</span> developer = {</div>
+    <br>
+    <div>&nbsp;&nbsp;name: <span class="green">'Diaa Abdelhady'</span>,</div>
+    <div>&nbsp;&nbsp;age: <span class="yellow">16</span>,</div>
+    <div>&nbsp;&nbsp;role: <span class="green">'Front-End'</span>,</div>
+    <div>&nbsp;&nbsp;learning: [</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">'HTML'</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">'CSS'</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">'JavaScript'</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">'Database'</span>,</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">'GDScript'</span></div>
+    <div>&nbsp;&nbsp;],</div>
+    <div>&nbsp;&nbsp;builds: <span class="blue">true</span>,</div>
+    <div>&nbsp;&nbsp;curiosity: <span class="yellow">Infinity</span></div>
+    <div>};</div>
+    <br>
+    <div><span class="gray">// still building...</span></div>
+   </div>
+
+  </div>
+
+  <div class="float-tag tag-one">HTML / CSS / JS</div>
+  <div class="float-tag tag-two">learning → building → shipping</div>
+
+ </div>
+
+</section>
+
+<div class="ticker">
+ <div class="ticker-track">
+  <div class="ticker-item"><b>01</b> FRONT-END</div>
+  <div class="ticker-item">HTML • CSS • JAVASCRIPT</div>
+  <div class="ticker-item"><b>02</b> CREATIVE UI</div>
+  <div class="ticker-item">BUILDING REAL PROJECTS</div>
+  <div class="ticker-item"><b>03</b> GDSCRIPT</div>
+  <div class="ticker-item">DATABASES</div>
+
+  <div class="ticker-item"><b>01</b> FRONT-END</div>
+  <div class="ticker-item">HTML • CSS • JAVASCRIPT</div>
+  <div class="ticker-item"><b>02</b> CREATIVE UI</div>
+  <div class="ticker-item">BUILDING REAL PROJECTS</div>
+  <div class="ticker-item"><b>03</b> GDSCRIPT</div>
+  <div class="ticker-item">DATABASES</div>
+ </div>
+</div>
+
+<section id="about">
+
+ <div class="section-head reveal">
+  <div>
+   <div class="section-number">01 / ABOUT</div>
+   <h2 class="section-title" data-i18n="aboutTitle">مش مجرد<br>كود.</h2>
+  </div>
+
+  <p class="section-note" data-i18n="aboutNote">
+   أنا شايف البرمجة كأداة لصناعة حاجة الناس تقدر تستخدمها،
+   مش مجرد كتابة أسطر كود.
+  </p>
+ </div>
+
+ <div class="about-layout">
+
+  <div class="reveal">
+   <div class="about-stamp">
+    <div class="stamp-center">DA</div>
+   </div>
+  </div>
+
+  <div class="reveal">
+
+   <p class="about-text" data-i18n="aboutText">
+    أنا <strong>ضياء عبدالهادي</strong>، عندي 16 سنة وبشتغل
+    على تطوير واجهات المواقع وتجربة المستخدم.
+    اتعلمت <strong>HTML, CSS, JavaScript, Databases و GDScript</strong>
+    وبحب أجرب أفكار مختلفة بدل ما أكتفي بالمشاريع التقليدية.
+    <br><br>
+    من الحاجات اللي بنيتها منصات تعليمية كاملة، ومشروع
+    للتواصل باستخدام الموجات فوق الصوتية، وكل مشروع منهم
+    علمني حاجة جديدة.
+   </p>
+
+   <div class="about-stats">
+    <div class="stat">
+     <b>16</b>
+     <span data-i18n="age">سنة</span>
+    </div>
+
+    <div class="stat">
+     <b>05+</b>
+     <span data-i18n="tech">تقنيات أتعلمها</span>
+    </div>
+
+    <div class="stat">
+     <b>03</b>
+     <span data-i18n="mainProjects">مشاريع رئيسية</span>
+    </div>
+   </div>
+
+  </div>
+
+ </div>
+
+</section>
+
+<section id="skills">
+
+ <div class="section-head reveal">
+  <div>
+   <div class="section-number">02 / SKILLS</div>
+   <h2 class="section-title" data-i18n="skillsTitle">الأدوات<br>اللي بستخدمها.</h2>
+  </div>
+
+  <p class="section-note" data-i18n="skillsNote">
+   مش بعتبر نفسي خلصت التعلم. كل تقنية هنا مرحلة في الطريق
+   ولسه فيه حاجات كتير نفسي أتعلمها.
+  </p>
+ </div>
+
+ <div class="skills-wrap">
+
+  <div class="reveal">
+
+   <div class="skill">
+    <div class="skill-top">
+     <span class="skill-name">HTML</span>
+     <span class="skill-type">STRUCTURE</span>
+    </div>
+    <div class="skill-bar"><span data-width="94%"></span></div>
+   </div>
+
+   <div class="skill">
+    <div class="skill-top">
+     <span class="skill-name">CSS</span>
+     <span class="skill-type">DESIGN / UI</span>
+    </div>
+    <div class="skill-bar"><span data-width="91%"></span></div>
+   </div>
+
+   <div class="skill">
+    <div class="skill-top">
+     <span class="skill-name">JavaScript</span>
+     <span class="skill-type">INTERACTION</span>
+    </div>
+    <div class="skill-bar"><span data-width="82%"></span></div>
+   </div>
+
+  </div>
+
+  <div class="reveal">
+
+   <div class="skill">
+    <div class="skill-top">
+     <span class="skill-name">Database</span>
+     <span class="skill-type">DATA</span>
+    </div>
+    <div class="skill-bar"><span data-width="70%"></span></div>
+   </div>
+
+   <div class="skill">
+    <div class="skill-top">
+     <span class="skill-name">GDScript</span>
+     <span class="skill-type">GODOT</span>
+    </div>
+    <div class="skill-bar"><span data-width="67%"></span></div>
+   </div>
+
+   <div class="skill">
+    <div class="skill-top">
+     <span class="skill-name">Git / GitHub</span>
+     <span class="skill-type">VERSION CONTROL</span>
+    </div>
+    <div class="skill-bar"><span data-width="78%"></span></div>
+   </div>
+
+  </div>
+
+ </div>
+
+</section>
+
+<section id="projects">
+
+ <div class="section-head reveal">
+  <div>
+   <div class="section-number">03 / SELECTED WORK</div>
+   <h2 class="section-title" data-i18n="projectsTitle">حاجات<br>بنيتها.</h2>
+  </div>
+
+  <p class="section-note" data-i18n="projectsNote">
+   مش مجرد Designs. دي مشاريع اشتغلت عليها وحولتها
+   لحاجات تقدر تفتحها وتجربها.
+  </p>
+ </div>
+
+ <div class="projects">
+
+  <article class="project reveal">
+
+   <div>
+    <div class="project-number">PROJECT / 001</div>
+    <h3>AMR SAKR<br>Platform</h3>
+    <p data-i18n="sakrDesc">
+     منصة تعليمية لمستر عمرو صقر، بواجهة مخصصة وتجربة
+     مختلفة عن المواقع التعليمية التقليدية.
+    </p>
+   </div>
+
+   <div class="project-bottom">
+    <div class="tags">
+     <span>HTML</span>
+     <span>CSS</span>
+     <span>JAVASCRIPT</span>
+     <span>EDTECH</span>
+    </div>
+
+    <a class="project-arrow"
+       href="https://sakr-platform.github.io/main/"
+       target="_blank">↗</a>
+   </div>
+
+  </article>
+
+  <article class="project reveal">
+
+   <div>
+    <div class="project-number">PROJECT / 002</div>
+    <h3>MASAR<br>EDUCATION</h3>
+    <p data-i18n="masarDesc">
+     منصة تعليمية أخرى صممتها وبنيتها كجزء من تجاربي
+     في بناء منصات الويب.
+    </p>
+   </div>
+
+   <div class="project-bottom">
+    <div class="tags">
+     <span>WEB</span>
+     <span>UI</span>
+     <span>EDUCATION</span>
+    </div>
+
+    <a class="project-arrow"
+       href="https://masar.site.je"
+       target="_blank">↗</a>
+   </div>
+
+  </article>
+
+  <article class="project reveal">
+
+   <div>
+    <div class="project-number">PROJECT / 003</div>
+    <h3>THE<br>UCP</h3>
+    <p data-i18n="ucpDesc">
+     Ultrasonic Communication Protocol — تجربة لبناء
+     نظام تواصل يعتمد على الموجات فوق الصوتية.
+    </p>
+   </div>
+
+   <div class="project-bottom">
+    <div class="tags">
+     <span>JAVASCRIPT</span>
+     <span>AUDIO</span>
+     <span>EXPERIMENT</span>
+    </div>
+
+    <a class="project-arrow"
+       href="https://diaaabdelhady248-a11y.github.io/THE-UCP-1/"
+       target="_blank">↗</a>
+   </div>
+
+  </article>
+
+  <article class="project reveal">
+
+   <div>
+    <div class="project-number">PROJECT / 004</div>
+    <h3>MORE<br>COMING.</h3>
+    <p data-i18n="moreDesc">
+     لسه مخلصتش. كل مشروع جديد بيكون تجربة مختلفة
+     وحاجة جديدة أتعلمها.
+    </p>
+   </div>
+
+   <div class="project-bottom">
+    <div class="tags">
+     <span>IDEAS</span>
+     <span>EXPERIMENTS</span>
+     <span>BUILDING</span>
+    </div>
+
+    <div class="project-arrow">+</div>
+   </div>
+
+  </article>
+
+ </div>
+
+</section>
+
+<section id="process">
+
+ <div class="section-head reveal">
+  <div>
+   <div class="section-number">04 / PROCESS</div>
+   <h2 class="section-title" data-i18n="processTitle">بشتغل<br>إزاي؟</h2>
+  </div>
+
+  <p class="section-note" data-i18n="processNote">
+   كل مشروع عندي بيبدأ بفكرة بسيطة، وبعدها تبدأ مرحلة
+   التجربة والتعديل لحد ما الحاجة تبقى شغالة.
+  </p>
+ </div>
+
+ <div class="process">
+
+  <div class="process-item reveal">
+   <b>01 / IDEA</b>
+   <h3 data-i18n="step1Title">الفكرة</h3>
+   <p data-i18n="step1">
+    أفهم المشكلة وأحدد بالضبط إيه اللي المفروض أبنيه.
+   </p>
+  </div>
+
+  <div class="process-item reveal">
+   <b>02 / BUILD</b>
+   <h3 data-i18n="step2Title">البناء</h3>
+   <p data-i18n="step2">
+    أبدأ بالكود الحقيقي وأبني الواجهة جزء جزء.
+   </p>
+  </div>
+
+  <div class="process-item reveal">
+   <b>03 / BREAK</b>
+   <h3 data-i18n="step3Title">التجربة</h3>
+   <p data-i18n="step3">
+    أجرب، أكسر الحاجة، أصلح المشاكل وأشوف إيه اللي ممكن يتحسن.
+   </p>
+  </div>
+
+  <div class="process-item reveal">
+   <b>04 / SHIP</b>
+   <h3 data-i18n="step4Title">النشر</h3>
+   <p data-i18n="step4">
+    لما المشروع يبقى جاهز، أنشره وأخليه متاح للتجربة.
+   </p>
+  </div>
+
+ </div>
+
+</section>
+
+<section>
+
+ <div class="quote reveal">
+  <div class="quote-mark">“</div>
+
+  <div class="quote-text" data-i18n="quote">
+   مش هدفي أكتب <em>كود أكتر.</em><br>
+   هدفي أبني حاجات <em>أحسن.</em>
+  </div>
+
+  <div class="quote-by">DIAA ABDELHADY / PERSONAL PHILOSOPHY</div>
+ </div>
+
+</section>
+
+<section>
+
+ <div class="section-head reveal">
+  <div>
+   <div class="section-number">05 / LANGUAGES</div>
+   
+  </div>
+
+  <p class="section-note" data-i18n="languageNote">
+   اختار اللغة اللي تحب تشوف بيها الـCV.
+  </p>
+ </div>
+
+ <div class="language-panel reveal">
+
+  <div class="language-current">
+   <small>SELECTED LANGUAGE</small>
+   <strong id="currentLanguage">العربية</strong>
+   <span id="languageCode">AR</span>
+  </div>
+
+  <div class="lang-list" id="langList">
+
+   <button class="lang-btn active" data-lang="ar">العربية</button>
+   <button class="lang-btn" data-lang="en">English</button>
+   <button class="lang-btn" data-lang="fr">Français</button>
+   <button class="lang-btn" data-lang="es">Español</button>
+   <button class="lang-btn" data-lang="de">Deutsch</button>
+   <button class="lang-btn" data-lang="it">Italiano</button>
+   <button class="lang-btn" data-lang="tr">Türkçe</button>
+   <button class="lang-btn" data-lang="pt">Português</button>
+   <button class="lang-btn" data-lang="ru">Русский</button>
+   <button class="lang-btn" data-lang="ja">日本語</button>
+   <button class="lang-btn" data-lang="ko">한국어</button>
+   <button class="lang-btn" data-lang="zh">中文</button>
+
+  </div>
+
+ </div>
+
+</section>
+
+<section class="contact" id="contact">
+
+ <div class="reveal">
+
+  <div class="section-number">06 / LET'S BUILD</div>
+
+  <h2 data-i18n="contactTitle">
+   عندك فكرة؟<br>
+   <span>يلا نبنيها.</span>
+  </h2>
+
+  <p data-i18n="contactText">
+   لو عايز تتواصل معايا، كل الطرق الكتير دي مش لازمة.
+   زرار واحد كفاية.
+  </p>
+
+  <a class="whatsapp"
+     href="https://wa.me/201070827731"
+     target="_blank"
+     rel="noopener">
+   <span class="whatsapp-icon">↗</span>
+   WhatsApp
+  </a>
+
+ </div>
+
+</section>
+
+</main>
+
+<footer>
+ <span>© 2026 Diaa Abdelhady</span>
+
+ <a class="github"
+    href="https://github.com/diaaabdelhady22"
+    target="_blank">
+  github.com/diaaabdelhady22 ↗
+ </a>
+</footer>
+
+
+<script>
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener("load",()=>{
+ setTimeout(()=>{
+  document.querySelector(".loader").classList.add("hide");
+ },900);
+});
+
+
+/* =========================
+   NAV
+========================= */
+
+const nav=document.getElementById("nav");
+const menu=document.getElementById("menu");
+const navLinks=document.getElementById("navLinks");
+
+window.addEventListener("scroll",()=>{
+ nav.classList.toggle("scrolled",window.scrollY>40);
+});
+
+menu.addEventListener("click",()=>{
+ navLinks.classList.toggle("open");
+});
+
+document.querySelectorAll(".nav-links a").forEach(a=>{
+ a.addEventListener("click",()=>{
+  navLinks.classList.remove("open");
+ });
+});
+
+
+/* =========================
+   CUSTOM CURSOR
+========================= */
+
+const cursor=document.querySelector(".cursor");
+const ring=document.querySelector(".cursor-ring");
+
+let mouseX=0;
+let mouseY=0;
+let ringX=0;
+let ringY=0;
+
+window.addEventListener("mousemove",e=>{
+ mouseX=e.clientX;
+ mouseY=e.clientY;
+ cursor.style.left=mouseX+"px";
+ cursor.style.top=mouseY+"px";
+});
+
+function cursorLoop(){
+ ringX+=(mouseX-ringX)*.13;
+ ringY+=(mouseY-ringY)*.13;
+
+ ring.style.left=ringX+"px";
+ ring.style.top=ringY+"px";
+
+ requestAnimationFrame(cursorLoop);
+}
+
+cursorLoop();
+
+document.querySelectorAll("a,button,.project").forEach(el=>{
+ el.addEventListener("mouseenter",()=>{
+  ring.style.width="60px";
+  ring.style.height="60px";
+ });
+
+ el.addEventListener("mouseleave",()=>{
+  ring.style.width="38px";
+  ring.style.height="38px";
+ });
+});
+
+
+/* =========================
+   REVEAL ON SCROLL
+========================= */
+
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   entry.target.classList.add("show");
+  }
+ });
+},{
+ threshold:.12
+});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+ observer.observe(el);
+});
+
+
+/* =========================
+   SKILL BARS
+========================= */
+
+const skillObserver=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   const bars=entry.target.querySelectorAll(".skill-bar span");
+
+   bars.forEach(bar=>{
+    bar.style.width=bar.dataset.width;
+   });
+
+   skillObserver.unobserve(entry.target);
+  }
+ });
+},{
+ threshold:.3
+});
+
+document.querySelectorAll(".skills-wrap").forEach(el=>{
+ skillObserver.observe(el);
+});
+
+
+/* =========================
+   HERO MOUSE PARALLAX
+========================= */
+
+const heroVisual=document.querySelector(".hero-visual");
+const codeCard=document.querySelector(".code-card");
+
+if(window.innerWidth>900){
+
+ heroVisual.addEventListener("mousemove",e=>{
+
+  const rect=heroVisual.getBoundingClientRect();
+
+  const x=(e.clientX-rect.left)/rect.width-.5;
+  const y=(e.clientY-rect.top)/rect.height-.5;
+
+  codeCard.style.transform=
+   `rotateY(${x*8}deg) rotateX(${-y*8}deg) translateY(-4px)`;
+ });
+
+ heroVisual.addEventListener("mouseleave",()=>{
+  codeCard.style.transform="rotate(3deg)";
+ });
+
+}
+
+
+/* =========================
+   LANGUAGE SYSTEM
+========================= */
+
+const translations={
+
+ar:{
+ navAbout:"عني",
+ navSkills:"المهارات",
+ navProjects:"المشاريع",
+ navProcess:"طريقة عملي",
+
+ heroHi:"أنا",
+ heroDesc:"مبرمج Front-End وطالب بحب أبني حاجات حقيقية من الصفر. بتعلم، بجرب، وبحوّل الأفكار لمواقع وتطبيقات شغالة فعلاً.",
+ seeWork:"شوف شغلي",
+
+ aboutTitle:"مش مجرد<br>كود.",
+ aboutNote:"أنا شايف البرمجة كأداة لصناعة حاجة الناس تقدر تستخدمها، مش مجرد كتابة أسطر كود.",
+ aboutText:"أنا <strong>ضياء عبدالهادي</strong>، عندي 16 سنة وبشتغل على تطوير واجهات المواقع وتجربة المستخدم. اتعلمت <strong>HTML, CSS, JavaScript, Databases و GDScript</strong> وبحب أجرب أفكار مختلفة بدل ما أكتفي بالمشاريع التقليدية.<br><br>من الحاجات اللي بنيتها منصات تعليمية كاملة، ومشروع للتواصل باستخدام الموجات فوق الصوتية، وكل مشروع منهم علمني حاجة جديدة.",
+ age:"سنة",
+ tech:"تقنيات أتعلمها",
+ mainProjects:"مشاريع رئيسية",
+
+ skillsTitle:"الأدوات<br>اللي بستخدمها.",
+ skillsNote:"مش بعتبر نفسي خلصت التعلم. كل تقنية هنا مرحلة في الطريق ولسه فيه حاجات كتير نفسي أتعلمها.",
+
+ projectsTitle:"حاجات<br>بنيتها.",
+ projectsNote:"مش مجرد Designs. دي مشاريع اشتغلت عليها وحولتها لحاجات تقدر تفتحها وتجربها.",
+ sakrDesc:"منصة تعليمية لمستر عمرو صقر، بواجهة مخصصة وتجربة مختلفة عن المواقع التعليمية التقليدية.",
+ masarDesc:"منصة تعليمية أخرى صممتها وبنيتها كجزء من تجاربي في بناء منصات الويب.",
+ ucpDesc:"Ultrasonic Communication Protocol — تجربة لبناء نظام تواصل يعتمد على الموجات فوق الصوتية.",
+ moreDesc:"لسه مخلصتش. كل مشروع جديد بيكون تجربة مختلفة وحاجة جديدة أتعلمها.",
+
+ processTitle:"بشتغل<br>إزاي؟",
+ processNote:"كل مشروع عندي بيبدأ بفكرة بسيطة، وبعدها تبدأ مرحلة التجربة والتعديل لحد ما الحاجة تبقى شغالة.",
+ step1Title:"الفكرة",
+ step1:"أفهم المشكلة وأحدد بالضبط إيه اللي المفروض أبنيه.",
+ step2Title:"البناء",
+ step2:"أبدأ بالكود الحقيقي وأبني الواجهة جزء جزء.",
+ step3Title:"التجربة",
+ step3:"أجرب، أكسر الحاجة، أصلح المشاكل وأشوف إيه اللي ممكن يتحسن.",
+ step4Title:"النشر",
+ step4:"لما المشروع يبقى جاهز، أنشره وأخليه متاح للتجربة.",
+
+ quote:"مش هدفي أكتب <em>كود أكتر.</em><br>هدفي أبني حاجات <em>أحسن.</em>",
+
+ languageTitle:"الموقع<br>بتاع العالم.",
+ languageNote:"اختار اللغة اللي تحب تشوف بيها الـCV.",
+
+ contactTitle:"عندك فكرة؟<br><span>يلا نبنيها.</span>",
+ contactText:"لو عايز تتواصل معايا، كل الطرق الكتير دي مش لازمة. زرار واحد كفاية."
+},
+
+en:{
+ navAbout:"About",
+ navSkills:"Skills",
+ navProjects:"Projects",
+ navProcess:"Process",
+
+ heroHi:"I'm",
+ heroDesc:"A Front-End developer and student who loves building real things from scratch. I learn, experiment and turn ideas into working websites and applications.",
+ seeWork:"See my work",
+
+ aboutTitle:"Not just<br>code.",
+ aboutNote:"I see programming as a tool for creating things people can actually use — not just writing lines of code.",
+ aboutText:"I'm <strong>Diaa Abdelhady</strong>, a 16-year-old developer focused on front-end development and user experience. I'm learning <strong>HTML, CSS, JavaScript, Databases and GDScript</strong>, and I enjoy experimenting with ideas instead of only building typical projects.<br><br>I've built educational platforms and an experimental communication project using ultrasonic waves. Every project taught me something new.",
+ age:"years old",
+ tech:"technologies",
+ mainProjects:"main projects",
+
+ skillsTitle:"The tools<br>I build with.",
+ skillsNote:"I don't consider learning finished. Every technology is another step, and there is still a lot I want to explore.",
+
+ projectsTitle:"Things<br>I built.",
+ projectsNote:"These aren't just designs. They're projects I actually worked on and turned into things you can open and try.",
+ sakrDesc:"An educational platform for Amr Sakr, built with a custom interface and a different approach to the typical education website.",
+ masarDesc:"Another educational platform I designed and built as part of my experiments with web platforms.",
+ ucpDesc:"Ultrasonic Communication Protocol — an experiment exploring communication through ultrasonic waves.",
+ moreDesc:"I'm not done yet. Every new project is another experiment and another thing to learn.",
+
+ processTitle:"How I<br>work.",
+ processNote:"Every project starts with a simple idea, then comes experimentation and iteration until the thing actually works.",
+ step1Title:"The idea",
+ step1:"Understand the problem and define exactly what needs to be built.",
+ step2Title:"Build",
+ step2:"Start writing real code and build the interface piece by piece.",
+ step3Title:"Break it",
+ step3:"Test it, break things, fix problems and find what can be improved.",
+ step4Title:"Ship",
+ step4:"When the project is ready, publish it and make it available to try.",
+
+ quote:"I don't want to write <em>more code.</em><br>I want to build <em>better things.</em>",
+
+ languageTitle:"A website<br>for everyone.",
+ languageNote:"Choose the language you want to see the CV in.",
+
+ contactTitle:"Got an idea?<br><span>Let's build it.</span>",
+ contactText:"If you want to reach me, you don't need ten different contact buttons. One is enough."
+},
+
+fr:{
+ navAbout:"À propos",
+ navSkills:"Compétences",
+ navProjects:"Projets",
+ navProcess:"Méthode",
+ heroHi:"Je suis",
+ heroDesc:"Développeur Front-End et étudiant passionné par la création de projets réels à partir de zéro.",
+ seeWork:"Voir mes projets",
+ aboutTitle:"Pas seulement<br>du code.",
+ aboutNote:"Je considère la programmation comme un outil pour créer des expériences utiles.",
+ aboutText:"Je suis <strong>Diaa Abdelhady</strong>, développeur de 16 ans spécialisé dans le Front-End.",
+ age:"ans",
+ tech:"technologies",
+ mainProjects:"projets principaux",
+ skillsTitle:"Mes<br>outils.",
+ skillsNote:"Chaque technologie représente une nouvelle étape d'apprentissage.",
+ projectsTitle:"Ce que<br>j'ai construit.",
+ projectsNote:"Des projets réels que vous pouvez ouvrir et tester.",
+ sakrDesc:"Une plateforme éducative personnalisée pour Amr Sakr.",
+ masarDesc:"Une autre plateforme éducative conçue et développée par moi.",
+ ucpDesc:"Une expérience de communication basée sur les ultrasons.",
+ moreDesc:"De nouveaux projets sont encore en préparation.",
+ processTitle:"Ma<br>méthode.",
+ processNote:"Une idée, du code, des tests et enfin une version utilisable.",
+ step1Title:"Idée",step1:"Comprendre le problème.",
+ step2Title:"Construire",step2:"Développer étape par étape.",
+ step3Title:"Tester",step3:"Tester, corriger et améliorer.",
+ step4Title:"Publier",step4:"Mettre le projet en ligne.",
+ quote:"Je ne veux pas écrire <em>plus de code.</em><br>Je veux créer <em>de meilleures choses.</em>",
+ languageTitle:"Le site<br>du monde.",
+ languageNote:"Choisissez une langue.",
+ contactTitle:"Une idée ?<br><span>Construisons-la.</span>",
+ contactText:"Un seul bouton suffit pour me contacter."
+},
+
+es:{
+ navAbout:"Sobre mí",navSkills:"Habilidades",navProjects:"Proyectos",navProcess:"Proceso",
+ heroHi:"Soy",heroDesc:"Desarrollador Front-End y estudiante al que le encanta crear proyectos reales desde cero.",seeWork:"Ver proyectos",
+ aboutTitle:"No solo<br>código.",aboutNote:"Veo la programación como una herramienta para crear cosas útiles.",
+ aboutText:"Soy <strong>Diaa Abdelhady</strong>, desarrollador de 16 años enfocado en Front-End.",
+ age:"años",tech:"tecnologías",mainProjects:"proyectos principales",
+ skillsTitle:"Mis<br>herramientas.",skillsNote:"Cada tecnología es otro paso en mi aprendizaje.",
+ projectsTitle:"Cosas que<br>construí.",projectsNote:"Proyectos reales que puedes abrir y probar.",
+ sakrDesc:"Plataforma educativa personalizada para Amr Sakr.",masarDesc:"Otra plataforma educativa diseñada y desarrollada por mí.",ucpDesc:"Experimento de comunicación mediante ultrasonidos.",moreDesc:"Más proyectos están por venir.",
+ processTitle:"Cómo<br>trabajo.",processNote:"Idea, código, pruebas y una versión funcional.",
+ step1Title:"Idea",step1:"Entender el problema.",step2Title:"Construir",step2:"Desarrollar paso a paso.",step3Title:"Probar",step3:"Probar, corregir y mejorar.",step4Title:"Publicar",step4:"Poner el proyecto en línea.",
+ quote:"No quiero escribir <em>más código.</em><br>Quiero crear <em>mejores cosas.</em>",
+ languageTitle:"Un sitio<br>para todos.",languageNote:"Elige un idioma.",
+ contactTitle:"¿Tienes una idea?<br><span>Construyámosla.</span>",contactText:"Un solo botón es suficiente para contactarme."
+},
+
+de:{
+ navAbout:"Über mich",navSkills:"Skills",navProjects:"Projekte",navProcess:"Prozess",
+ heroHi:"Ich bin",heroDesc:"Front-End-Entwickler und Schüler, der gerne echte Projekte von Grund auf baut.",seeWork:"Projekte ansehen",
+ aboutTitle:"Nicht nur<br>Code.",aboutNote:"Programmieren ist für mich ein Werkzeug, um Dinge zu bauen, die Menschen wirklich nutzen können.",
+ aboutText:"Ich bin <strong>Diaa Abdelhady</strong>, 16 Jahre alt und konzentriere mich auf Front-End-Entwicklung.",
+ age:"Jahre",tech:"Technologien",mainProjects:"Hauptprojekte",
+ skillsTitle:"Meine<br>Werkzeuge.",skillsNote:"Jede Technologie ist ein weiterer Schritt.",
+ projectsTitle:"Was ich<br>gebaut habe.",projectsNote:"Echte Projekte, die du öffnen und ausprobieren kannst.",
+ sakrDesc:"Eine individuelle Bildungsplattform für Amr Sakr.",masarDesc:"Eine weitere Bildungsplattform von mir.",ucpDesc:"Ein Experiment für Kommunikation über Ultraschall.",moreDesc:"Weitere Projekte kommen.",
+ processTitle:"Wie ich<br>arbeite.",processNote:"Idee, Code, Tests und eine funktionierende Version.",
+ step1Title:"Idee",step1:"Das Problem verstehen.",step2Title:"Bauen",step2:"Schritt für Schritt entwickeln.",step3Title:"Testen",step3:"Testen und verbessern.",step4Title:"Veröffentlichen",step4:"Das Projekt online bringen.",
+ quote:"Ich möchte nicht <em>mehr Code</em> schreiben.<br>Ich möchte <em>bessere Dinge</em> bauen.",
+ languageTitle:"Eine Website<br>für alle.",languageNote:"Sprache auswählen.",
+ contactTitle:"Eine Idee?<br><span>Lass sie uns bauen.</span>",contactText:"Eine Schaltfläche reicht für die Kontaktaufnahme."
+},
+
+it:{
+ navAbout:"Chi sono",navSkills:"Competenze",navProjects:"Progetti",navProcess:"Processo",
+ heroHi:"Sono",heroDesc:"Sviluppatore Front-End e studente che ama costruire progetti reali da zero.",seeWork:"Vedi progetti",
+ aboutTitle:"Non solo<br>codice.",aboutNote:"Vedo la programmazione come uno strumento per creare cose utili.",
+ aboutText:"Sono <strong>Diaa Abdelhady</strong>, sviluppatore di 16 anni focalizzato sul Front-End.",
+ age:"anni",tech:"tecnologie",mainProjects:"progetti principali",
+ skillsTitle:"I miei<br>strumenti.",skillsNote:"Ogni tecnologia è un altro passo.",
+ projectsTitle:"Cose che<br>ho costruito.",projectsNote:"Progetti reali che puoi aprire e provare.",
+ sakrDesc:"Piattaforma educativa personalizzata per Amr Sakr.",masarDesc:"Un'altra piattaforma educativa realizzata da me.",ucpDesc:"Esperimento di comunicazione tramite ultrasuoni.",moreDesc:"Altri progetti arriveranno.",
+ processTitle:"Come<br>lavoro.",processNote:"Idea, codice, test e una versione funzionante.",
+ step1Title:"Idea",step1:"Capire il problema.",step2Title:"Costruire",step2:"Sviluppare passo dopo passo.",step3Title:"Testare",step3:"Testare e migliorare.",step4Title:"Pubblicare",step4:"Mettere il progetto online.",
+ quote:"Non voglio scrivere <em>più codice.</em><br>Voglio costruire <em>cose migliori.</em>",
+ languageTitle:"Un sito<br>per tutti.",languageNote:"Scegli una lingua.",
+ contactTitle:"Hai un'idea?<br><span>Costruiamola.</span>",contactText:"Un solo pulsante basta per contattarmi."
+},
+
+tr:{
+ navAbout:"Hakkımda",navSkills:"Yetenekler",navProjects:"Projeler",navProcess:"Süreç",
+ heroHi:"Ben",heroDesc:"Sıfırdan gerçek projeler oluşturmayı seven bir Front-End geliştiricisi ve öğrenciyim.",seeWork:"Projelerim",
+ aboutTitle:"Sadece<br>kod değil.",aboutNote:"Programlamayı insanların gerçekten kullanabileceği şeyler oluşturmak için bir araç olarak görüyorum.",
+ aboutText:"Ben <strong>Diaa Abdelhady</strong>, 16 yaşında bir Front-End geliştiricisiyim.",
+ age:"yaşında",tech:"teknoloji",mainProjects:"ana proje",
+ skillsTitle:"Kullandığım<br>araçlar.",skillsNote:"Her teknoloji yeni bir öğrenme adımı.",
+ projectsTitle:"Yaptığım<br>şeyler.",projectsNote:"Açıp deneyebileceğin gerçek projeler.",
+ sakrDesc:"Amr Sakr için özel eğitim platformu.",masarDesc:"Tasarlayıp geliştirdiğim başka bir eğitim platformu.",ucpDesc:"Ultrasonik dalgalarla iletişim deneyi.",moreDesc:"Daha fazlası geliyor.",
+ processTitle:"Nasıl<br>çalışıyorum?",processNote:"Fikir, kod, test ve çalışan bir sonuç.",
+ step1Title:"Fikir",step1:"Problemi anlamak.",step2Title:"Yap",step2:"Adım adım geliştirmek.",step3Title:"Test",step3:"Test etmek ve geliştirmek.",step4Title:"Yayınla",step4:"Projeyi çevrimiçi yapmak.",
+ quote:"Daha fazla <em>kod yazmak</em> istemiyorum.<br><em>Daha iyi şeyler</em> yapmak istiyorum.",
+ languageTitle:"Herkes<br>için site.",languageNote:"Bir dil seç.",
+ contactTitle:"Bir fikrin mi var?<br><span>Hadi yapalım.</span>",contactText:"Bana ulaşmak için tek buton yeterli."
+},
+
+pt:{
+ navAbout:"Sobre mim",navSkills:"Habilidades",navProjects:"Projetos",navProcess:"Processo",
+ heroHi:"Eu sou",heroDesc:"Desenvolvedor Front-End e estudante que gosta de criar projetos reais do zero.",seeWork:"Ver projetos",
+ aboutTitle:"Não é só<br>código.",aboutNote:"Vejo programação como uma ferramenta para criar coisas úteis.",
+ aboutText:"Sou <strong>Diaa Abdelhady</strong>, desenvolvedor de 16 anos focado em Front-End.",
+ age:"anos",tech:"tecnologias",mainProjects:"projetos principais",
+ skillsTitle:"Minhas<br>ferramentas.",skillsNote:"Cada tecnologia é mais um passo.",
+ projectsTitle:"Coisas que<br>construí.",projectsNote:"Projetos reais que você pode abrir e testar.",
+ sakrDesc:"Plataforma educacional personalizada para Amr Sakr.",masarDesc:"Outra plataforma educacional criada por mim.",ucpDesc:"Experimento de comunicação usando ultrassom.",moreDesc:"Mais projetos estão chegando.",
+ processTitle:"Como<br>trabalho.",processNote:"Ideia, código, testes e uma versão funcional.",
+ step1Title:"Ideia",step1:"Entender o problema.",step2Title:"Construir",step2:"Desenvolver passo a passo.",step3Title:"Testar",step3:"Testar e melhorar.",step4Title:"Publicar",step4:"Colocar o projeto online.",
+ quote:"Não quero escrever <em>mais código.</em><br>Quero criar <em>coisas melhores.</em>",
+ languageTitle:"Um site<br>para todos.",languageNote:"Escolha um idioma.",
+ contactTitle:"Tem uma ideia?<br><span>Vamos construir.</span>",contactText:"Um único botão é suficiente para entrar em contato."
+},
+
+ru:{
+ navAbout:"Обо мне",navSkills:"Навыки",navProjects:"Проекты",navProcess:"Процесс",
+ heroHi:"Я",heroDesc:"Front-End разработчик и ученик, который любит создавать реальные проекты с нуля.",seeWork:"Мои проекты",
+ aboutTitle:"Не только<br>код.",aboutNote:"Я воспринимаю программирование как инструмент для создания полезных вещей.",
+ aboutText:"Я <strong>Diaa Abdelhady</strong>, 16-летний Front-End разработчик.",
+ age:"лет",tech:"технологий",mainProjects:"основных проекта",
+ skillsTitle:"Мои<br>инструменты.",skillsNote:"Каждая технология — новый шаг.",
+ projectsTitle:"Что я<br>создал.",projectsNote:"Реальные проекты, которые можно открыть и попробовать.",
+ sakrDesc:"Образовательная платформа для Amr Sakr.",masarDesc:"Ещё одна образовательная платформа, созданная мной.",ucpDesc:"Эксперимент с коммуникацией через ультразвук.",moreDesc:"Новые проекты скоро.",
+ processTitle:"Как я<br>работаю.",processNote:"Идея, код, тестирование и рабочий результат.",
+ step1Title:"Идея",step1:"Понять проблему.",step2Title:"Создание",step2:"Разрабатывать шаг за шагом.",step3Title:"Тест",step3:"Тестировать и улучшать.",step4Title:"Публикация",step4:"Опубликовать проект.",
+ quote:"Я не хочу писать <em>больше кода.</em><br>Я хочу создавать <em>лучшие вещи.</em>",
+ languageTitle:"Сайт<br>для всех.",languageNote:"Выберите язык.",
+ contactTitle:"Есть идея?<br><span>Давайте создадим.</span>",contactText:"Одной кнопки достаточно, чтобы связаться со мной."
+},
+
+ja:{
+ navAbout:"自己紹介",navSkills:"スキル",navProjects:"プロジェクト",navProcess:"制作方法",
+ heroHi:"僕は",heroDesc:"ゼロから本物のプロジェクトを作ることが好きな16歳のフロントエンド開発者です。",seeWork:"作品を見る",
+ aboutTitle:"コード<br>だけじゃない。",aboutNote:"プログラミングを、人が実際に使えるものを作るための道具だと考えています。",
+ aboutText:"僕は<strong>Diaa Abdelhady</strong>。16歳のフロントエンド開発者です。",
+ age:"歳",tech:"技術",mainProjects:"主なプロジェクト",
+ skillsTitle:"使っている<br>ツール。",skillsNote:"すべての技術が新しい学びです。",
+ projectsTitle:"作った<br>もの。",projectsNote:"実際に開いて試せるプロジェクトです。",
+ sakrDesc:"Amr Sakrのための教育プラットフォーム。",masarDesc:"僕が作ったもう一つの教育プラットフォーム。",ucpDesc:"超音波を使った通信実験。",moreDesc:"新しいプロジェクトも準備中。",
+ processTitle:"僕の<br>作り方。",processNote:"アイデア、コード、テスト、そして完成。",
+ step1Title:"アイデア",step1:"問題を理解する。",step2Title:"制作",step2:"少しずつ作る。",step3Title:"テスト",step3:"試して改善する。",step4Title:"公開",step4:"プロジェクトを公開する。",
+ quote:"もっと<em>コードを書く</em>のではなく、<br><em>もっと良いもの</em>を作りたい。",
+ languageTitle:"世界の<br>ためのサイト。",languageNote:"言語を選択してください。",
+ contactTitle:"アイデアがある？<br><span>一緒に作ろう。</span>",contactText:"連絡するためのボタンは一つで十分です。"
+},
+
+ko:{
+ navAbout:"소개",navSkills:"기술",navProjects:"프로젝트",navProcess:"작업 방식",
+ heroHi:"저는",heroDesc:"처음부터 실제 프로젝트를 만드는 것을 좋아하는 16살 프론트엔드 개발자입니다.",seeWork:"프로젝트 보기",
+ aboutTitle:"코드만<br>만드는 게 아니다.",aboutNote:"프로그래밍은 사람들이 실제로 사용할 수 있는 것을 만드는 도구라고 생각합니다.",
+ aboutText:"저는 <strong>Diaa Abdelhady</strong>, 16살 프론트엔드 개발자입니다.",
+ age:"살",tech:"기술",mainProjects:"주요 프로젝트",
+ skillsTitle:"사용하는<br>도구.",skillsNote:"모든 기술은 새로운 배움입니다.",
+ projectsTitle:"내가<br>만든 것.",projectsNote:"직접 열어보고 사용할 수 있는 프로젝트입니다.",
+ sakrDesc:"Amr Sakr를 위한 교육 플랫폼.",masarDesc:"제가 만든 또 다른 교육 플랫폼.",ucpDesc:"초음파 통신 실험 프로젝트.",moreDesc:"새로운 프로젝트가 계속 만들어지고 있습니다.",
+ processTitle:"작업<br>방식.",processNote:"아이디어, 코드, 테스트 그리고 완성.",
+ step1Title:"아이디어",step1:"문제를 이해합니다.",step2Title:"제작",step2:"하나씩 개발합니다.",step3Title:"테스트",step3:"테스트하고 개선합니다.",step4Title:"배포",step4:"프로젝트를 공개합니다.",
+ quote:"더 많은 <em>코드</em>가 아니라<br><em>더 좋은 것</em>을 만들고 싶습니다.",
+ languageTitle:"모두를<br>위한 사이트.",languageNote:"언어를 선택하세요.",
+ contactTitle:"아이디어가 있나요?<br><span>같이 만들어봐요.</span>",contactText:"연락 버튼 하나면 충분합니다."
+},
+
+zh:{
+ navAbout:"关于我",navSkills:"技能",navProjects:"项目",navProcess:"流程",
+ heroHi:"我是",heroDesc:"一名16岁的前端开发者和学生，喜欢从零开始构建真正的项目。",seeWork:"查看项目",
+ aboutTitle:"不只是<br>代码。",aboutNote:"我把编程看作创造真正有用产品的工具。",
+ aboutText:"我是<strong>Diaa Abdelhady</strong>，一名16岁的前端开发者。",
+ age:"岁",tech:"项技术",mainProjects:"主要项目",
+ skillsTitle:"我的<br>工具。",skillsNote:"每一项技术都是一次新的学习。",
+ projectsTitle:"我所<br>构建的。",projectsNote:"可以直接打开和体验的真实项目。",
+ sakrDesc:"为Amr Sakr制作的教育平台。",masarDesc:"我设计并开发的另一个教育平台。",ucpDesc:"使用超声波进行通信的实验项目。",moreDesc:"更多项目正在制作中。",
+ processTitle:"我的<br>方式。",processNote:"想法、代码、测试，然后完成。",
+ step1Title:"想法",step1:"理解问题。",step2Title:"构建",step2:"一步一步开发。",step3Title:"测试",step3:"测试并改进。",step4Title:"发布",step4:"上线项目。",
+ quote:"我不想写<em>更多代码。</em><br>我想创造<em>更好的东西。</em>",
+ languageTitle:"为所有人<br>而做的网站。",languageNote:"选择语言。",
+ contactTitle:"有想法？<br><span>一起做出来。</span>",contactText:"一个按钮就足够联系我。"
+}
+
+};
+
+const languageNames={
+ ar:["العربية","AR"],
+ en:["English","EN"],
+ fr:["Français","FR"],
+ es:["Español","ES"],
+ de:["Deutsch","DE"],
+ it:["Italiano","IT"],
+ tr:["Türkçe","TR"],
+ pt:["Português","PT"],
+ ru:["Русский","RU"],
+ ja:["日本語","JA"],
+ ko:["한국어","KO"],
+ zh:["中文","ZH"]
+};
+
+function setLanguage(lang){
+
+ const data=translations[lang];
+
+ if(!data)return;
+
+ document.documentElement.lang=lang;
+
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+  const key=el.dataset.i18n;
+
+  if(data[key]!==undefined){
+   el.innerHTML=data[key];
+  }
+ });
+
+ document.getElementById("currentLanguage").textContent=languageNames[lang][0];
+ document.getElementById("languageCode").textContent=languageNames[lang][1];
+
+ document.querySelectorAll(".lang-btn").forEach(btn=>{
+  btn.classList.toggle("active",btn.dataset.lang===lang);
+ });
+
+ document.getElementById("langTop").textContent=
+  lang==="ar"?"EN":"AR";
+
+ localStorage.setItem("diaa-language",lang);
+}
+
+document.querySelectorAll(".lang-btn").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  setLanguage(btn.dataset.lang);
+ });
+});
+
+document.getElementById("langTop").addEventListener("click",()=>{
+ const current=localStorage.getItem("diaa-language")||"ar";
+ setLanguage(current==="ar"?"en":"ar");
+});
+
+const savedLanguage=localStorage.getItem("diaa-language")||"ar";
+setLanguage(savedLanguage);
+
+
+/* =========================
+   SMALL RANDOM DETAILS
+========================= */
+
+const floatTags=document.querySelectorAll(".float-tag");
+
+floatTags.forEach((tag,i)=>{
+ tag.style.animationDelay=(i*.8)+"s";
+});
+
+
+/* =========================
+   PROJECT TILT
+========================= */
+
+if(window.innerWidth>900){
+
+ document.querySelectorAll(".project").forEach(card=>{
+
+  card.addEventListener("mousemove",e=>{
+
+   const rect=card.getBoundingClientRect();
+
+   const x=(e.clientX-rect.left)/rect.width-.5;
+   const y=(e.clientY-rect.top)/rect.height-.5;
+
+   card.style.transform=
+    `perspective(900px) rotateX(${-y*2}deg) rotateY(${x*2}deg) translateY(-8px)`;
+  });
+
+  card.addEventListener("mouseleave",()=>{
+   card.style.transform="";
+  });
+
+ });
+
+}
+
+
+/* =========================
+   KONAMI-STYLE LITTLE EASTER EGG
+========================= */
+
+let keys="";
+
+window.addEventListener("keydown",e=>{
+
+ keys+=e.key.toLowerCase();
+
+ if(keys.length>12){
+  keys=keys.slice(-12);
+ }
+
+ if(keys.includes("diaa")){
+
+  document.body.animate([
+   {filter:"none"},
+   {filter:"hue-rotate(90deg)"},
+   {filter:"none"}
+  ],{
+   duration:700
+  });
+
+  keys="";
+ }
+});
+
+</script>
+
+</body>
+</html>

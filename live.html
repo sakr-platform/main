@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONLINE SESSIONS</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png" type="image/png">
+  <style>
+    .live-shell { width: min(100%, 1100px); margin: 0 auto; padding: 18px 14px 44px; box-sizing: border-box; }
+    .live-grid { display: grid; gap: 14px; margin-top: 14px; }
+    .live-card { background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; padding: 14px; box-shadow: 0 18px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.10); margin-bottom: 16px; }
+    .live-card img { width: 100%; height: auto; object-fit: contain; border-radius: 14px; display: block; }
+    .live-card h3 { margin: 10px 0 6px; color: #fff; font-size: 18px; }
+    .live-card p { color: rgba(255,255,255,0.86); font-size: 14px; margin: 4px 0; }
+    .live-card .btn { min-height: 48px; font-size: 18px; border-radius: 14px; margin-top: 10px; }
+    @media (min-width: 850px) { .live-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+    <!-- Settings System Initializer -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+  <script type="module" src="student-session.js"></script>
+</head>
+<body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <div class="upbox">
+    &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"><img src="logo.png" width="70px" alt="Logo"></div>
+    <span class="brand-name">AMR SAKR</span>
+    <div class="upboxs">
+      <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+        <img src="menu.png" width="60px" alt="Menu">
+      </button>
+    </div>
+  </div>
+
+  <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+    <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu"><span class="material-symbols-rounded">close</span></button>
+    <h2>AMR SAKR</h2>
+<a href="index.html"><span class="material-symbols-rounded menu-icon">home</span>HOME</a>
+    <a href="channel.html"><span class="material-symbols-rounded menu-icon">school</span>STUDENT PAGE</a>
+    <a href="designer.html"><span class="material-symbols-rounded menu-icon">brush</span>THE WEB DESIGNER</a>
+    <a href="#" onclick="localStorage.removeItem('savedCode'); window.location.href='index.html';"><span class="material-symbols-rounded menu-icon">logout</span>SIGN OUT</a>
+  </aside>
+
+  <main class="hero-wrap live-shell">
+    <section class="hero-card hero-split">
+      <article class="hero-visual">
+        <p class="eyebrow">ONLINE SESSIONS</p>
+        <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
+        <h1 class="hero-title">LIVE SESSIONS</h1>
+        <p class="hero-text">JOIN OUR SESSIONS ON ZOOM</p>
+      </article>
+    </section>
+
+    <section id="container" class="live-grid"></section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD7pq3JOf-wJ4JW-bW0A43wUUDTeXFUEyE",
+      authDomain: "course1-b69a8.firebaseapp.com",
+      projectId: "course1-b69a8",
+      storageBucket: "course1-b69a8.firebasestorage.app",
+      messagingSenderId: "227683851137",
+      appId: "1:227683851137:web:6a93710794e0ac3598a680"
+    };
+
+    const studentFirebaseConfig = {
+      apiKey: "AIzaSyCEFLxdWt8h1_JWjzyJ2n2dP-HXxmD3jvU",
+      authDomain: "students-68430.firebaseapp.com",
+      projectId: "students-68430",
+      storageBucket: "students-68430.firebasestorage.app",
+      messagingSenderId: "202641775624",
+      appId: "1:202641775624:web:fe2d70e4ec92d62d5b85bd"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const studentsApp = initializeApp(studentFirebaseConfig, "students-shared");
+    const dbStudents = getFirestore(studentsApp);
+    const container = document.getElementById("container");
+    const pageMiddle = 1;
+
+    async function getCurrentStudentGroup() {
+      const userId = localStorage.getItem("userId") || localStorage.getItem("savedCode");
+      if (!userId) return "";
+      try {
+        const studentSnap = await getDoc(doc(dbStudents, "students", userId));
+        if (!studentSnap.exists()) return "";
+        return (studentSnap.data().group || "").toString();
+      } catch (error) {
+        console.error("Error loading student group:", error);
+        return "";
+      }
+    }
+
+    async function loadLives() {
+      try {
+        container.innerHTML = "";
+        const studentGroup = await getCurrentStudentGroup();
+        const groupSnap = await getDocs(collection(dbStudents, "groups"));
+        const activeGroupIds = new Set();
+        groupSnap.forEach((groupDoc) => {
+          const data = groupDoc.data();
+          if (data.active !== false) activeGroupIds.add(groupDoc.id);
+        });
+        const liveSnap = await getDocs(collection(db, "lives"));
+        const items = [];
+        
+        liveSnap.forEach(item => {
+          const data = item.data();
+          if (!data.name || !data.link) return;
+
+          const sameMiddle = String(data.middle ?? pageMiddle) === String(pageMiddle);
+          const itemGroup = (data.group || "").toString();
+          const groupMatches = Boolean(studentGroup) && itemGroup && itemGroup === studentGroup && activeGroupIds.has(itemGroup);
+          const noGroupFallback = (!itemGroup || itemGroup === "") && (!studentGroup || activeGroupIds.has(studentGroup) || !studentGroup);
+
+          if (groupMatches || (!studentGroup && noGroupFallback && sameMiddle) || (studentGroup && noGroupFallback && sameMiddle)) {
+            items.push({ ...data, time: data.createdAt || 0 });
+          }
+        });
+
+        if (!items.length) {
+          container.innerHTML = '<div class="live-card"><h3>No live sessions available for your group yet.</h3></div>';
+          return;
+        }
+
+        items.sort((a, b) => Number(b.time) - Number(a.time));
+
+        items.forEach(data => {
+          container.innerHTML += `
+            <div class="live-card">
+              ${data.image ? `<img src="${data.image}" alt="${data.name}">` : ''}
+              <h3>🎥 ${data.name}</h3>
+              <a href="${data.link}" target="_blank">
+                <button class="btn">Join session</button>
+              </a>
+            </div>
+          `;
+        });
+      } catch (error) {
+        console.error("Error loading lives:", error);
+      }
+    }
+    
+    loadLives();
+  </script>
+
+  <script>
+    // Menu functionality
+    const menuBtn = document.getElementById('menuBtn');
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    function openMenu() {
+      sideMenu.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenuPanel() {
+      sideMenu.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    if (menuBtn) menuBtn.addEventListener('click', openMenu);
+    if (closeMenu) closeMenu.addEventListener('click', closeMenuPanel);
+    if (overlay) overlay.addEventListener('click', closeMenuPanel);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeMenuPanel();
+    });
+
+    // Attendance and Achievement tracking
+    let lessonStartTime = Date.now();
+
+    function saveAttendanceAndAchievement(liveTitle) {
+      const studentName =
+        localStorage.getItem("channelUserName") ||
+        localStorage.getItem("studentName") ||
+        localStorage.getItem("username") ||
+        localStorage.getItem("name") ||
+        localStorage.getItem("userName") || "Student";
+
+      let spentTime = Math.floor((Date.now() - lessonStartTime) / 60000);
+      if (spentTime < 1) spentTime = 1;
+
+      // 1. حفظ الحضور
+      let attendance = JSON.parse(localStorage.getItem("attendanceData") || "{}");
+      if (!attendance[studentName]) attendance[studentName] = [];
+      const alreadyExists = attendance[studentName].some(lesson => lesson.name === liveTitle);
+      if (!alreadyExists) {
+        attendance[studentName].push({ name: liveTitle, time: spentTime + " minutes" });
+        localStorage.setItem("attendanceData", JSON.stringify(attendance));
+      }
+
+      // 2. حفظ الإنجازات
+      let achievements = JSON.parse(localStorage.getItem("completedLessons") || "[]");
+      const lessonIndexed = achievements.findIndex(l => l.name === liveTitle);
+      if (lessonIndexed === -1) {
+        achievements.push({
+          name: liveTitle,
+          date: new Date().toLocaleDateString(),
+          isNew: true 
+        });
+        localStorage.setItem("completedLessons", JSON.stringify(achievements));
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      const btn = e.target.closest("a, button");
+      if (!btn) return;
+      const card = btn.closest(".live-card");
+      if (!card) return;
+      const titleElement = card.querySelector("h3");
+      let liveTitle = "Live Stream";
+      if (titleElement) {
+        liveTitle = titleElement.innerText.replace('🎥', '').trim();
+      }
+      saveAttendanceAndAchievement(liveTitle);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Setup & Download</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: "Share Tech", sans-serif;
+      position: relative;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.22), transparent 12%), radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.14), transparent 18%), radial-gradient(circle at 80% 0%, rgba(124, 58, 237, 0.25), transparent 20%), linear-gradient(145deg, #04043b 0%, #06066b 30%, #01011f 65%, #00000e 100%);
+      color: #fff;
+    }
+
+    /* 📱 الكرت الرئيسي - تصميم هندسي مطور */
+    .detect-shell {
+      position: relative;
+      width: min(90vw, 520px);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 32px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 48px 30px 36px;
+      text-align: center;
+      color: #fff;
+      box-sizing: border-box;
+      animation: cardRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes cardRise {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .detect-logo {
+      width: 95px;
+      height: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+      transition: transform 0.3s ease;
+    }
+
+    .detect-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .detect-title {
+      font-size: 30px;
+      margin: 0 0 8px;
+      color: #ffffff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .detect-subtitle {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 15px;
+      margin: 0 0 32px;
+      line-height: 1.6;
+      padding: 0 10px;
+    }
+
+    /* ⚡ الأزرار بتعديل انسيابي وتأثير لمعان رائع */
+    .detect-btn,
+    .download-btn {
+      position: relative;
+      width: 100%;
+      background: linear-gradient(135deg, #fff3a8 0%, #ffd700 50%, #cca300 100%);
+      color: #04043b;
+      border: none;
+      border-radius: 18px;
+      min-height: 62px;
+      font-size: 20px;
+      font-family: "Share Tech", sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.25);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .detect-btn::before,
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(30deg) translateY(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .detect-btn:hover::before,
+    .download-btn:hover::before {
+      transform: rotate(30deg) translateY(100%);
+    }
+
+    .detect-btn:hover,
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+    }
+
+    .detect-btn:active,
+    .download-btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .detect-btn:disabled {
+      cursor: wait;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+      transform: none !important;
+    }
+
+    /* ⏳ نظام التحميل المتطور بالأشكال التفاعلية */
+    .progress-wrapper {
+      display: none;
+      margin: 30px 0 20px;
+      position: relative;
+    }
+
+    .scanner-ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scanner-ring::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(from 0deg, transparent 20%, #ffd700);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: spin 1.2s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .percentage-counter {
+      font-size: 26px;
+      color: #ffd700;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #ffaa00);
+      box-shadow: 0 0 15px #ffd700;
+      border-radius: 20px;
+      transition: width 0.1s linear;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .detect-status {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 14px;
+      min-height: 22px;
+      letter-spacing: 0.5px;
+    }
+
+    /* 📥 شاشة النتيجة */
+    .result-container {
+      display: none;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .device-info-box {
+      margin-top: 20px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 28px;
+      color: rgba(255, 255, 255, 0.45);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: #ffd700;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="detect-shell">
+    <img src="logo.png" alt="AMR SAKR logo" class="detect-logo">
+    <h1 class="detect-title">App Installer</h1>
+    <p class="detect-subtitle">Get the optimized standalone application version tailored exactly for your hardware device.</p>
+
+    <button class="detect-btn" id="detectBtn">
+      <span class="material-symbols-rounded">developer_board</span>
+      Detect Device Type
+    </button>
+
+    <div class="progress-wrapper" id="progressWrapper">
+      <div class="scanner-ring">
+        <div class="percentage-counter" id="percentText">0%</div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="detect-status" id="status">System Engine: Ready</div>
+
+    <div class="result-container" id="resultContainer">
+      <button class="download-btn" id="downloadBtn">
+        <span class="material-symbols-rounded" id="downloadIcon">download</span>
+        <span id="downloadText">Download App</span>
+      </button>
+      <br>
+      <div class="device-info-box">
+        <span class="material-symbols-rounded" style="font-size: 18px; color: #ffd700;">info</span>
+        <span id="deviceDetails"></span>
+      </div>
+    </div>
+
+   
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('SW Registered'))
+          .catch(err => console.log('SW Failed', err));
+      });
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    const detectBtn = document.getElementById('detectBtn');
+    const progressWrapper = document.getElementById('progressWrapper');
+    const progressBar = document.getElementById('progressBar');
+    const percentText = document.getElementById('percentText');
+    const statusEl = document.getElementById('status');
+    const resultContainer = document.getElementById('resultContainer');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadText = document.getElementById('downloadText');
+    const downloadIcon = document.getElementById('downloadIcon');
+    const deviceDetails = document.getElementById('deviceDetails');
+
+    function analyzeDevice() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const ua = navigator.userAgent || '';
+
+      const isTablet = (/iPad|Android/i.test(ua) && !/Mobile/i.test(ua)) || (width >= 768 && width < 1200);
+      const isMobile = /Mobi|Android|iPhone|iPod|Mobile/i.test(ua) || width < 768;
+
+      if (isTablet) {
+        return { text: 'Download for Tablet', icon: 'tablet_mac', info: `Tablet Config (${width}x${height})` };
+      } else if (isMobile) {
+        return { text: 'Download for Mobile', icon: 'smartphone', info: `Mobile Config (${width}x${height})` };
+      } else {
+        return { text: 'Download for PC', icon: 'desktop_windows', info: `Desktop Config (${width}x${height})` };
+      }
+    }
+
+    detectBtn.addEventListener('click', () => {
+      detectBtn.disabled = true;
+      statusEl.textContent = 'Initializing core hardware diagnostics...';
+      statusEl.style.color = '#ffd700';
+
+      resultContainer.style.display = 'none';
+      progressWrapper.style.display = 'block';
+
+      let start = null;
+      const duration = 10000;
+
+      function animateProgress(timestamp) {
+        if (!start) start = timestamp;
+        const progress = timestamp - start;
+        const percentage = Math.min((progress / duration) * 100, 100);
+
+        progressBar.style.width = percentage + '%';
+        percentText.textContent = Math.floor(percentage) + '%';
+
+        if (percentage > 25 && percentage < 55) {
+          statusEl.textContent = 'Analyzing display grid matrix...';
+        } else if (percentage >= 55 && percentage < 85) {
+          statusEl.textContent = 'Compiling application environment packages...';
+        } else if (percentage >= 85) {
+          statusEl.textContent = 'Finalizing operational verification...';
+        }
+
+        if (progress < duration) {
+          requestAnimationFrame(animateProgress);
+        } else {
+          completeDetection();
+        }
+      }
+
+      requestAnimationFrame(animateProgress);
+    });
+
+    function completeDetection() {
+      const deviceData = analyzeDevice();
+
+      progressWrapper.style.display = 'none';
+      detectBtn.style.display = 'none';
+
+      statusEl.textContent = 'Device environment identified!';
+      statusEl.style.color = 'rgba(255,255,255,0.4)';
+
+      downloadText.textContent = deviceData.text;
+      downloadIcon.textContent = deviceData.icon;
+      deviceDetails.textContent = deviceData.info;
+
+      resultContainer.style.display = 'block';
+
+      downloadBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log(`Installation outcome: ${outcome}`);
+          deferredPrompt = null;
+        } else {
+          alert('Application bundle is already active or shortcuts generated. Check your App Drawer / Desktop!');
+        }
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      statusEl.textContent = 'Installation Complete!';
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Tracking | AMR SAKR</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+   <link rel="icon" href="logo.png" type="image/png">
+  <style>
+    .payment-session-list { display:grid; gap:10px; margin-top:18px; text-align:left; }
+    .payment-session-row { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:13px 15px; border:1px solid rgba(255,255,255,.14); border-radius:12px; background:rgba(255,255,255,.06); }
+    .payment-session-label { color:#ffe675; font-weight:700; }
+    .payment-session-status { font-weight:700; text-align:right; }
+    .paid { color:#4edf7a; } .unpaid { color:red; } .absent { color:yellow; } .unmarked { color:#a3e5ff; }
+    .payment-message { min-height:22px; margin:18px 0 0; color:rgba(255,255,255,.78); }
+    .payment-back { display:inline-flex; align-items:center; gap:7px; margin-top:18px; color:#ffe675; text-decoration:none; }
+    .payment-back:hover { color:#fff; }
+  </style>
+</head>
+<body>
+  <div class="upbox">
+    <div class="hh"><img src="logo.png" width="70px" alt="Logo"></div>
+    <span class="brand-name">AMR SAKR</span>
+  </div>
+
+  <main class="hero-wrap">
+    <section class="hero-card hero-split">
+      <article class="hero-visual">
+        <p class="eyebrow">STUDENT ACCOUNT</p>
+        <img src="logo.png" width="240px" id="mlogo" alt="AMR SAKR logo">
+        <h1 class="hero-title">PAYMENT TRACKING</h1>
+        <p class="hero-text" id="studentHeading">Loading your account...</p>
+      </article>
+      <aside class="hero-actions">
+        <div class="btn-group">
+          <div id="studentSummary" aria-live="polite"></div>
+          <a class="payment-back" href="javascript:history.back()"><span class="material-symbols-rounded">arrow_back</span>Back to channel</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const paymentApp = initializeApp({ apiKey:"AIzaSyBnbRbbuYmqjyE2V126NxxxC17GXbOAVe0", authDomain:"payment-scheduale.firebaseapp.com", projectId:"payment-scheduale", storageBucket:"payment-scheduale.firebasestorage.app", messagingSenderId:"425821063734", appId:"1:425821063734:web:0672f7f6cf07c1d81ce697" });
+    const paymentDb = getFirestore(paymentApp);
+    const summary = document.getElementById('studentSummary');
+    const studentHeading = document.getElementById('studentHeading');
+    const id = localStorage.getItem('userId') || localStorage.getItem('savedCode');
+    const statusText = { paid:'✓ Paid', unpaid:"✗ Didn\'t pay", absent:'No attendance', unmarked:'? Not marked' };
+    async function loadPaymentStatus() {
+      if (!id) { studentHeading.textContent = 'Please sign in first.'; summary.innerHTML = '<p class="payment-message">Your student account was not found.</p>'; return; }
+      try {
+        const tracking = await getDoc(doc(paymentDb, 'paymentTracking', id));
+        if (!tracking.exists()) { studentHeading.textContent = 'Payment tracking'; summary.innerHTML = '<p class="payment-message">No payment record has been created yet.</p>'; return; }
+        const trackingData = tracking.data();
+        const sessions = Array.isArray(trackingData.sessions) ? trackingData.sessions : [];
+        studentHeading.textContent = trackingData.studentName || 'Student';
+        summary.innerHTML = sessions.length ? `<div class="payment-session-list">${sessions.map((session) => `<div class="payment-session-row"><span class="payment-session-label">Session ${session.number}</span><span class="payment-session-status ${session.status}">${statusText[session.status] || statusText.unmarked}</span></div>`).join('')}</div>` : '<p class="payment-message">No sessions have been recorded yet.</p>';
+      } catch (error) { studentHeading.textContent = 'Payment tracking'; summary.innerHTML = '<p class="payment-message">Could not load payment status. Check your connection.</p>'; }
+    }
+    loadPaymentStatus();
+  </script>
+</body>
+</html>

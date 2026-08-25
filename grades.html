@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMR SAKR | Student Grades</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png" type="image/png">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+  <style>
+    body {
+      padding-top: 82px;
+    }
+
+    .hero-wrap {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+    }
+
+    .student-box {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .error-card {
+      background: rgba(255, 77, 77, 0.1);
+      border: 1px solid rgba(255, 77, 77, 0.25);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      color: #ff8d8d;
+    }
+
+    /* === تصميم الرسم البياني المحدث === */
+    .chart-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .chart-card h3 {
+      color: #ffd700;
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 250px;
+    }
+
+    /* كروت الدرجات */
+    .grade-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grade-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .grade-info h4 {
+      margin: 0;
+      font-size: 20px;
+      color: #ffd700;
+      letter-spacing: 0.5px;
+    }
+
+    .grade-info .subject-text {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .grade-info .score-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 4px;
+    }
+
+    .grade-status-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 90px;
+    }
+
+    .appreciation-tag {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .tag-perfect { background: rgba(0, 230, 118, 0.2); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.4); }
+    .tag-verygood { background: rgba(0, 176, 255, 0.2); color: #00b0ff; border: 1px solid rgba(0, 176, 255, 0.4); }
+    .tag-pass { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.4); }
+    .tag-studymore { background: rgba(255, 61, 0, 0.2); color: #ff3d00; border: 1px solid rgba(255, 61, 0, 0.4); }
+    .tag-no-attendance { background: rgba(255, 193, 7, 0.15); color: #ffd54a; border: 1px solid rgba(255, 193, 7, 0.45); }
+
+    .status-svg {
+      width: 50px;
+      height: 50px;
+      display: block;
+    }
+
+    .circle-anim {
+      stroke-dasharray: 150;
+      stroke-dashoffset: 150;
+      animation: strokeCircle 0.6s ease-in-out forwards;
+    }
+
+    .check-anim {
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+      animation: strokeCheck 0.4s 0.5s ease-in-out forwards;
+    }
+
+    .cross-anim-1, .cross-anim-2 {
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30;
+    }
+
+    .cross-anim-1 { animation: strokeCheck 0.3s 0.4s ease-in-out forwards; }
+    .cross-anim-2 { animation: strokeCheck 0.3s 0.6s ease-in-out forwards; }
+
+    @keyframes strokeCircle { to { stroke-dashoffset: 0; } }
+    @keyframes strokeCheck { to { stroke-dashoffset: 0; } }
+
+    @media (max-width: 768px) {
+      .grade-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+      .grade-status-wrapper {
+        margin-top: 10px;
+      }
+      .chart-wrapper {
+        height: 200px;
+      }
+    }
+  </style>
+
+  <script>
+    (function() {
+      const theme = localStorage.getItem('settings-theme') || 'dark';
+      const accent = localStorage.getItem('settings-accent') || 'gold';
+      const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+      const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+      const animations = localStorage.getItem('settings-animations') || 'normal';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-accent', accent);
+      document.documentElement.setAttribute('data-font-size', fontSize);
+      document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+      document.documentElement.setAttribute('data-animations', animations);
+    })();
+  </script>
+  <script src="settings.js" defer></script>
+  <script type="module" src="student-session.js"></script>
+</head>
+<body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <div class="upbox">
+    &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"> <img src="logo.png" width="70px" alt="Logo"></div>
+    <span class="brand-name">AMR SAKR</span>
+    <div class="upboxs">
+      <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+        <img src="menu.png" width="60px" alt="Menu">
+      </button>
+    </div>
+  </div>
+
+  <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+    <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu">×</button>
+    <h2>AMR SAKR</h2>
+    <a href="code.html">SIGN IN</a>
+    <a href="contact.html">CONTACT</a>
+    <a href="designer.html">THE WEB DESIGNER</a>
+    <a href="#" onclick="localStorage.removeItem('savedCode'); localStorage.removeItem('userId'); location.reload();">SIGN OUT</a>
+  </aside>
+
+  <main class="hero-wrap">
+    <section class="hero-card hero-split">
+      <article class="hero-visual">
+        <p class="eyebrow">unlock the wonders of science</p>
+        <img src="logo.png" width="300px" id="mlogo" alt="AMR SAKR logo">
+        <h1 class="hero-title">Your Exam Grades</h1>
+        <p class="hero-text">Your grades are loaded</p>
+        <br><br>
+
+        <div id="chartContainer" class="chart-card" style="display: none;">
+          <h3>Student Progress</h3>
+          <div class="chart-wrapper">
+            <canvas id="progressChart"></canvas>
+          </div>
+        </div>
+      </article>
+
+      <aside class="hero-actions">
+        <div class="btn-group" style="width: 100%;">
+          <button id="searchBtn" class="btn" style="width: 100%; margin-bottom: 10px;">REFRESH GRADES</button>          
+          <div id="resultBox" class="student-box"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    function openMenu() {
+      sideMenu.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenuPanel() {
+      sideMenu.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    closeMenu.addEventListener('click', closeMenuPanel);
+    overlay.addEventListener('click', closeMenuPanel);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeMenuPanel();
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAC1bNuWAD8noagHV2SD0y4PP0ABhxDdqo",
+      authDomain: "students-68430.firebaseapp.com",
+      projectId: "students-68430",
+      storageBucket: "students-68430.firebasestorage.app",
+      messagingSenderId: "202641775624",
+      appId: "1:202641775624:web:fe2d70e4ec92d62d5b85bd"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const resultBox = document.getElementById("resultBox");
+    const chartContainer = document.getElementById("chartContainer");
+    let chartInstance = null;
+
+    async function loadGradesByCode(code) {
+      const trimmed = (code || "").trim();
+      if (!trimmed) {
+        resultBox.innerHTML = "<div class='error-card'><strong>No signed-in student found. Please sign in first.</strong></div>";
+        chartContainer.style.display = "none";
+        return;
+      }
+
+      try {
+        const studentsSnapshot = await getDocs(collection(db, "students"));
+        let studentExists = false;
+        studentsSnapshot.forEach((docSnap) => {
+          if (docSnap.id === trimmed) studentExists = true;
+        });
+
+        if (!studentExists) {
+          resultBox.innerHTML = "<div class='error-card'><strong>Student account is invalid or not found.</strong></div>";
+          chartContainer.style.display = "none";
+          return;
+        }
+
+        const q = query(collection(db, "grades"), where("studentId", "==", trimmed));
+        const snapshot = await getDocs(q);
+        const grades = snapshot.docs
+          .map((docSnap) => ({ id: docSnap.id, ...docSnap.data() }))
+          .sort((a, b) => Number(a.examNumber || 0) - Number(b.examNumber || 0));
+
+        resultBox.innerHTML = "";
+
+        if (!grades.length) {
+          resultBox.innerHTML = "<div class='error-card' style='background:rgba(255,255,255,0.05); color:#fff; border-color:rgba(255,255,255,0.1)'><strong>No exam grades uploaded yet.</strong></div>";
+          chartContainer.style.display = "none";
+          return;
+        }
+
+        const labels = [];
+        const dataPoints = [];
+        let previousPercentage = 0;
+
+        grades.forEach((item) => {
+          const isNoAttendance = String(item.status || "").toLowerCase() === "no-attendance" || String(item.grade || "").toLowerCase() === "no attendance";
+          const studentScore = isNoAttendance ? 0 : parseFloat(item.grade || 0);
+          const totalScore = parseFloat(item.totalGrade || 100);
+          const percentage = isNoAttendance ? previousPercentage : parseFloat(((studentScore / totalScore) * 100).toFixed(1));
+
+          labels.push(`Exam ${item.examNumber || '-'}${isNoAttendance ? ' (No attendance)' : ''}`);
+          dataPoints.push(isNoAttendance ? previousPercentage : percentage);
+
+          let appreciation = "Study More";
+          let tagClass = "tag-studymore";
+
+          if (isNoAttendance) {
+            appreciation = "No Attendance";
+            tagClass = "tag-no-attendance";
+          } else if (percentage >= 95) {
+            appreciation = "Perfect";
+            tagClass = "tag-perfect";
+          } else if (percentage >= 90) {
+            appreciation = "Excellent";
+            tagClass = "tag-verygood";
+          } else if (percentage >= 80) {
+            appreciation = "Very Good";
+            tagClass = "tag-verygood";
+          } else if (percentage >= 70) {
+            appreciation = "Good";
+            tagClass = "tag-pass";
+          } else if (percentage >= 50) {
+            appreciation = "Pass";
+            tagClass = "tag-pass";
+          }
+
+          let svgGraphic = isNoAttendance ? `
+            <svg class="status-svg" viewBox="0 0 52 52">
+              <circle class="circle-anim" cx="26" cy="26" r="25" fill="none" stroke="#ffd54a" stroke-width="3"/>
+              <text x="26" y="34" text-anchor="middle" fill="#ffd54a" font-size="26" font-weight="700" font-family="Arial, sans-serif">?</text>
+            </svg>` : percentage >= 50 ? `
+            <svg class="status-svg" viewBox="0 0 52 52">
+              <circle class="circle-anim" cx="26" cy="26" r="25" fill="none" stroke="#00e676" stroke-width="3"/>
+              <path class="check-anim" fill="none" stroke="#00e676" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 27l7 7 16-16"/>
+            </svg>` : `
+            <svg class="status-svg" viewBox="0 0 52 52">
+              <circle class="circle-anim" cx="26" cy="26" r="25" fill="none" stroke="#ff3d00" stroke-width="3"/>
+              <path class="cross-anim-1" fill="none" stroke="#ff3d00" stroke-width="4" stroke-linecap="round" d="M16 16l20 20"/>
+              <path class="cross-anim-2" fill="none" stroke="#ff3d00" stroke-width="4" stroke-linecap="round" d="M36 16L16 36"/>
+            </svg>`;
+
+          const card = document.createElement("div");
+          card.className = "grade-card";
+          card.innerHTML = `
+            <div class="grade-info">
+              <h4>Exam ${item.examNumber || "-"}</h4>
+              <div class="subject-text">Subject: ${item.subject || "-"}</div>
+              <div class="score-text">${isNoAttendance ? 'No attendance' : `Score: ${studentScore} / ${totalScore} (${percentage}%)`}</div>
+            </div>
+            <div class="grade-status-wrapper">
+              ${svgGraphic}
+              <div class="appreciation-tag ${tagClass}">${appreciation}</div>
+            </div>
+          `;
+          resultBox.appendChild(card);
+
+          if (!isNoAttendance && Number.isFinite(percentage)) {
+            previousPercentage = percentage;
+          }
+        });
+
+        chartContainer.style.display = "block";
+        renderChart(labels, dataPoints);
+
+      } catch (err) {
+        console.error("Error loading grades:", err);
+        resultBox.innerHTML = "<div class='error-card'><strong>An error occurred while loading grades.</strong></div>";
+      }
+    }
+
+    function renderChart(labels, data) {
+      if (typeof Chart === 'undefined') return;
+
+      const canvas = document.getElementById('progressChart');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+      gradient.addColorStop(0, 'rgba(255, 215, 0, 0.35)');
+      gradient.addColorStop(1, 'rgba(255, 215, 0, 0.0)');
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Score %',
+            data: data,
+            borderColor: '#ffd700',
+            borderWidth: 3,
+            backgroundColor: gradient,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#00b0ff', /* تم التغيير إلى اللون الأزرق */
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 6,
+            pointHoverRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              titleColor: '#ffd700',
+              bodyColor: '#fff',
+              displayColors: false,
+              callbacks: {
+                label: (ctx) => `Result: ${ctx.raw}%`
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: { color: 'rgba(255, 255, 255, 0.7)', font: { size: 11 } },
+              grid: { color: 'rgba(255, 255, 255, 0.08)' }
+            },
+            x: {
+              ticks: { color: 'rgba(255, 255, 255, 0.7)', font: { size: 11 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    const signedInCode = localStorage.getItem("userId") || localStorage.getItem("savedCode") || "";
+    document.getElementById("searchBtn").addEventListener("click", () => loadGradesByCode(signedInCode));
+    loadGradesByCode(signedInCode);
+  </script>
+</body>
+</html>

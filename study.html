@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AMR SAKR - Science Platform</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    
+    <style>
+        /* كونتير الكويز الشفاف المتناسق مع ستايل الهيدر الأصفر */
+        .quiz-container {
+            width: 100%;
+            max-width: 460px;
+            background: transparent;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            font-family: 'Share Tech', sans-serif;
+            color: #fff;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ffcc00;
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.1);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+        .progress-bar {
+            font-size: 15px;
+            color: #ffcc00;
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+            letter-spacing: 1px;
+        }
+        .date-badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #aaa;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .question-text {
+            font-size: 19px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-align: left;
+            min-height: 60px;
+            transition: all 0.3s ease;
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        /* تصميم أزرار الخيارات الزجاجي الفخم المتناسق مع التوهج الأصفر */
+        .option-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 204, 0, 0.25);
+            color: #e0e0e0;
+            padding: 16px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            font-family: 'Share Tech', sans-serif;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .option-btn:hover:not(:disabled) {
+            color: #fff;
+            border-color: #ffcc00;
+            background: rgba(255, 204, 0, 0.08);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            transform: scale(1.02);
+        }
+        
+        /* الدائرة التفاعلية */
+        .feedback-circle {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.2s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct {
+            color: #fff !important;
+            border-color: #00ff55 !important;
+            background: rgba(0, 255, 85, 0.15) !important;
+            box-shadow: 0 0 15px rgba(0, 255, 85, 0.4);
+        }
+        .option-btn.correct .feedback-circle {
+            opacity: 1;
+            border-color: #00ff55;
+            background: #00ff55;
+            box-shadow: 0 0 8px #00ff55;
+        }
+        .option-btn.correct .feedback-circle::after {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 8px;
+            border: solid #000;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .option-btn.wrong {
+            color: #fff !important;
+            border-color: #ff3333 !important;
+            background: rgba(255, 51, 51, 0.15) !important;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
+        }
+        .option-btn.wrong .feedback-circle {
+            opacity: 1;
+            border-color: #ff3333;
+            background: #ff3333;
+            box-shadow: 0 0 8px #ff3333;
+        }
+        .option-btn.wrong .feedback-circle::after {
+            content: 'x';
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1;
+            margin-top: -3px;
+        }
+
+        /* أنيميشن الطيران والامتصاص السريع للدرج الجانبي */
+        .fly-to-notes {
+            animation: flyToNotesAnimation 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            pointer-events: none;
+        }
+        @keyframes flyToNotesAnimation {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.05) translate(300px, 150px);
+                opacity: 0;
+            }
+        }
+
+        /* زر النوتس الجانبي العائم بالأصفر النيون */
+        .notes-toggle-btn {
+            position: fixed;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            background: rgba(10, 10, 10, 0.6);
+            border: 2px solid #ffcc00;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(5px);
+        }
+        .notes-toggle-btn:hover {
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
+            transform: translateY(-50%) scale(1.08);
+        }
+        
+        /* تفعيل أنيميشن ومضة حركة الدرج التفاعلية */
+        .notes-toggle-btn.pulse-absorb {
+            animation: drawerPulse 0.35s ease-in-out;
+            border-color: #ff3333;
+            box-shadow: 0 0 25px #ff3333;
+        }
+        @keyframes drawerPulse {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.25); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+
+        /* أيقونة النوت بـ CSS النظيف باللون الأصفر */
+        .notes-icon {
+            width: 18px;
+            height: 22px;
+            border: 2px solid #ffcc00;
+            border-radius: 3px;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+        .notes-icon::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 3px;
+            width: 8px; height: 2px;
+            background: #ffcc00;
+            box-shadow: 0 4px 0 #ffcc00, 0 8px 0 #ffcc00;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .notes-toggle-btn.pulse-absorb .notes-icon {
+            border-color: #ff3333;
+        }
+        .notes-toggle-btn.pulse-absorb .notes-icon::before {
+            background: #ff3333;
+            box-shadow: 0 4px 0 #ff3333, 0 8px 0 #ff3333;
+        }
+
+        /* قائمة الملاحظات الجانبية الصفراء */
+        .notes-sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.96);
+            border-left: 2px solid #ffcc00;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            z-index: 1001;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 25px;
+            box-sizing: border-box;
+            font-family: 'Share Tech', sans-serif;
+            color: #fff;
+        }
+        .notes-sidebar.open {
+            right: 0;
+            border-left-color: #ffcc00;
+        }
+        .notes-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .notes-sidebar-header h3 {
+            margin: 0;
+            color: #ffcc00;
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        .close-notes-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-notes-btn:hover {
+            color: #ffcc00;
+        }
+        .sidebar-notes-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+        .sidebar-note-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #ffcc00;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .sidebar-note-card .correct-answer {
+            color: #00ff55;
+            margin-top: 6px;
+            font-weight: bold;
+        }
+
+        /* فيو النتيجة النهائية الأصفر الشفاف */
+        .score-view {
+            text-align: center;
+            padding: 30px 10px;
+        }
+        .score-view h2 {
+            color: #ffcc00;
+            font-size: 32px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+        }
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .restart-btn {
+            background: #ffcc00;
+            color: #000;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-family: 'Share Tech', sans-serif;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+            transition: all 0.2s ease;
+        }
+        .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.7);
+        }
+    </style>
+    <!-- Settings System Initializer -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+    <script type="module" src="student-session.js"></script>
+</head>
+<body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <div class="upbox">
+       &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"> <img src="logo.png" width="70px" alt="Logo"></div>
+      <span class="brand-name">AMR SAKR</span>
+      <div class="upboxs">
+        <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+          <img src="menu.png" width="60px" alt="Menu">
+        </button>
+      </div>
+    </div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+      <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu">×</button>
+      <h2>AMR SAKR</h2>
+<a href="code.html">SIGN IN</a>
+      <a href="contact.html">CONTACT</a>
+      <a href="designer.html">THE WEB DESIGNER</a>
+      <a href="#" onclick="localStorage.removeItem('savedCode');">SIGN OUT</a>
+    </aside>
+
+    <!-- زر الملاحظات الجانبي الشفاف بالأصفر -->
+    <button id="notesToggleBtn" class="notes-toggle-btn" aria-label="Open Review Notes">
+        <div class="notes-icon"></div>
+    </button>
+
+    <!-- القائمة الجانبية للملاحظات المسترجعة من الـ Local Storage -->
+    <aside id="notesSidebar" class="notes-sidebar" aria-label="Review Notes Sidebar">
+        <div class="notes-sidebar-header">
+            <h3>REVIEW NOTES</h3>
+            <button id="closeNotesBtn" class="close-notes-btn">×</button>
+        </div>
+        <ul id="sidebarNotesList" class="sidebar-notes-list">
+            <!-- تُحقن البيانات تلقائياً هنا -->
+        </ul>
+    </aside>
+
+    <main class="hero-wrap">
+      <section class="hero-card hero-split">
+        <article class="hero-visual">
+          <p class="eyebrow">unlock the wonders of science</p>
+          <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
+          <h1 class="hero-title">AMR SAKR</h1>
+          <p class="hero-text">science educator <br> ( dive into the world of science )</p>
+        </article><br>
+
+        <!-- منطقة الكويز الزجاجية الشفافة بالأصفر المتناسق بالكامل مع الهيدر -->
+        <aside class="hero-actions">
+          <div class="quiz-container" id="quizContainer">
+              <div class="quiz-header">
+                  <span class="progress-bar" id="progressText">Question --/10</span>
+                  <span class="date-badge" id="dateText">Loading...</span>
+              </div>
+              <div id="quizBody">
+                  <div class="question-text" id="questionText">Initializing Science Database...</div>
+                  <div class="options-list" id="optionsContainer"></div>
+              </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+        let allQuestions = [];
+        let dailyQuestions = [];
+        let currentQuestionIdx = 0;
+        let userScore = 0;
+        let answered = false;
+        let audioCtx = null;
+
+        function triggerAudioFeedback(isCorrect) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                if (isCorrect) {
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime); 
+                    oscillator.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08); 
+                    gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.35);
+                } else {
+                    oscillator.type = 'sawtooth';
+                    oscillator.frequency.setValueAtTime(140, audioCtx.currentTime);
+                    oscillator.frequency.linearRampToValueAtTime(85, audioCtx.currentTime + 0.25);
+                    gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.25);
+                }
+            } catch (e) {
+                console.error("Audio feedback error:", e);
+            }
+        }
+
+        function loadStoredNotes() {
+            const stored = localStorage.getItem('amrSakrQuizNotes');
+            if (stored) {
+                const notesArray = JSON.parse(stored);
+                const sidebarNotesList = document.getElementById('sidebarNotesList');
+                sidebarNotesList.innerHTML = '';
+                notesArray.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'sidebar-note-card';
+                    li.innerHTML = `
+                        <div><strong>Q:</strong> ${item.question}</div>
+                        <div class="correct-answer">Correct: ${item.correct}</div>
+                    `;
+                    sidebarNotesList.appendChild(li);
+                });
+            }
+        }
+
+        async function fetchQuizData() {
+            loadStoredNotes(); 
+            try {
+                const response = await fetch('questions.json');
+                if (!response.ok) throw new Error('Network issue');
+                allQuestions = await response.json();
+            } catch (error) {
+                console.error("External database missing, loading standard fallback set.", error);
+                allQuestions = [
+                    {q: "What is the chemical symbol for Water?", a: ["H2O", "CO2", "O2", "NaCl"], c: 0},
+                    {q: "Which planet is known as the Red Planet?", a: ["Earth", "Mars", "Jupiter", "Venus"], c: 1},
+                    {q: "What is the powerhouse of the cell?", a: ["Nucleus", "Ribosome", "Mitochondria", "Chloroplast"], c: 2},
+                    {q: "What constant speed does light travel at?", a: ["300,000 km/s", "150,000 km/s", "1,000,000 km/s", "500,000 km/s"], c: 0},
+                    {q: "Which gas do plants absorb during photosynthesis?", a: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], c: 2}
+                ];
+            }
+            initDailyEngine();
+        }
+
+        function customRandom(seed) {
+            let x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+        function initDailyEngine() {
+            const today = new Date();
+            const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            
+            document.getElementById('dateText').innerText = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            let indices = Array.from(Array(allQuestions.length).keys());
+            let pickedIndices = [];
+            
+            let currentSeed = dateSeed;
+            for (let i = 0; i < 10; i++) {
+                let r = customRandom(currentSeed);
+                currentSeed += 11;
+                let selectIdx = Math.floor(r * indices.length);
+                pickedIndices.push(indices[selectIdx]);
+                indices.splice(selectIdx, 1);
+            }
+
+            dailyQuestions = pickedIndices.map(idx => allQuestions[idx]);
+            currentQuestionIdx = 0;
+            userScore = 0;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            answered = false;
+            if (currentQuestionIdx >= dailyQuestions.length) {
+                showResultsView();
+                return;
+            }
+
+            const qTextEl = document.getElementById('questionText');
+            qTextEl.className = 'question-text'; 
+            
+            document.getElementById('progressText').innerText = `QUESTION ${currentQuestionIdx + 1} / ${dailyQuestions.length}`;
+            const currentQ = dailyQuestions[currentQuestionIdx];
+            qTextEl.innerText = currentQ.q;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            currentQ.a.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${option}</span><div class="feedback-circle"></div>`;
+                btn.onclick = () => checkUserAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkUserAnswer(selectedIndex, clickedBtn) {
+            if (answered) return;
+            answered = true;
+
+            const currentQ = dailyQuestions[currentQuestionIdx];
+            const buttons = document.querySelectorAll('.option-btn');
+            const questionTextElement = document.getElementById('questionText');
+
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === currentQ.c) {
+                clickedBtn.classList.add('correct');
+                triggerAudioFeedback(true);
+                
+                setTimeout(() => {
+                    currentQuestionIdx++;
+                    renderQuestion();
+                }, 1000);
+                userScore++;
+            } else {
+                clickedBtn.classList.add('wrong');
+                buttons[currentQ.c].classList.add('correct');
+                triggerAudioFeedback(false);
+
+                setTimeout(() => {
+                    questionTextElement.classList.add('fly-to-notes');
+                    clickedBtn.classList.add('fly-to-notes');
+                    
+                    const notesToggleBtn = document.getElementById('notesToggleBtn');
+                    notesToggleBtn.classList.add('pulse-absorb');
+                    
+                    saveErrorToLocalStorage(currentQ.q, currentQ.a[currentQ.c]);
+                    
+                    setTimeout(() => {
+                        notesToggleBtn.classList.remove('pulse-absorb');
+                        currentQuestionIdx++;
+                        renderQuestion();
+                    }, 350); 
+                }, 800);
+            }
+        }
+
+        function saveErrorToLocalStorage(questionText, correctAnswerText) {
+            let currentNotes = [];
+            const stored = localStorage.getItem('amrSakrQuizNotes');
+            if (stored) {
+                currentNotes = JSON.parse(stored);
+            }
+
+            if (!currentNotes.some(n => n.question === questionText)) {
+                currentNotes.push({ question: questionText, correct: correctAnswerText });
+                localStorage.setItem('amrSakrQuizNotes', JSON.stringify(currentNotes));
+            }
+
+            loadStoredNotes();
+        }
+
+        function showResultsView() {
+            const container = document.getElementById('quizContainer');
+            let evaluationText = "Excellent job! Scientist in the making!";
+            if (userScore < 5) evaluationText = "Keep learning! Science takes practice.";
+            else if (userScore < 8) evaluationText = "Great effort! You know your science well.";
+
+            container.innerHTML = `
+                <div class="score-view">
+                    <h2>CHALLENGE COMPLETE</h2>
+                    <p style="color: #888; font-size: 14px; letter-spacing: 1px;">YOUR SCORE</p>
+                    <div class="score-number" style="text-shadow: 0 0 15px ${userScore >= 5 ? '#00ff55':'#ff3333'}; color: ${userScore >= 5 ? '#00ff55':'#ff3333'}">${userScore} / 10</div>
+                    <p style="font-size: 16px; margin: 15px 0 25px 0; color: #eee; line-height:1.4;">${evaluationText}</p>
+                    <button class="restart-btn" onclick="location.reload()">REVIEW TODAY'S QUIZ</button>
+                </div>
+            `;
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchQuizData);
+
+        // واجهات القوائم الجانبية
+        const menuBtn = document.getElementById('menuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        const notesToggleBtn = document.getElementById('notesToggleBtn');
+        const notesSidebar = document.getElementById('notesSidebar');
+        const closeNotesBtn = document.getElementById('closeNotesBtn');
+
+        menuBtn.addEventListener('click', () => {
+            sideMenu.classList.add('open');
+            overlay.classList.add('show');
+        });
+
+        closeMenu.addEventListener('click', closeMenuPanel);
+        overlay.addEventListener('click', () => {
+            closeMenuPanel();
+            notesSidebar.classList.remove('open');
+        });
+
+        function closeMenuPanel() {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('show');
+        }
+
+        notesToggleBtn.addEventListener('click', () => {
+            notesSidebar.classList.toggle('open');
+            if(notesSidebar.classList.contains('open')) {
+                overlay.classList.add('show');
+            } else {
+                overlay.classList.remove('show');
+            }
+        });
+
+        closeNotesBtn.addEventListener('click', () => {
+            notesSidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>SIGN IN PAGE</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="icon" href="logo.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="profile-system.js" defer></script>
+  
+  <style>
+    /* تنسيق خاص بحقل كلمة السر وزر الإظهار */
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    #contactLink {
+      color: gold;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 45px; /* مساحة للأيقونة */
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      outline: none;
+    }
+
+    .toggle-password:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <div class="upbox">
+    <div class="hh"><img src="logo.png" width="70px" alt="Logo"></div>
+    <span class="brand-name">AMR SAKR</span>
+    <div class="upboxs">
+      <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+        <img src="menu.png" width="60px" alt="Menu">
+      </button>
+    </div>
+  </div>
+
+  <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+    <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+    <h2>AMR SAKR</h2>
+    <a href="device-detect.html"><span class="material-symbols-rounded menu-icon">download</span>DOWNLOAD AS AN APP</a>
+    <a href="index.html"><span class="material-symbols-rounded menu-icon">home</span>HOME</a>
+    <a href="contact.html"><span class="material-symbols-rounded menu-icon">mail</span>CONTACT</a>
+    <a href="designer.html"><span class="material-symbols-rounded menu-icon">brush</span>THE WEB DESIGNER</a>
+  </aside>
+
+  <main class="hero-wrap">
+    <section class="hero-card hero-split code-card">
+      <article class="hero-visual">
+        <p class="eyebrow">RECOVERY ACCESS</p>
+        <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
+        <h1 class="hero-title">AMR SAKR</h1>
+        <p class="hero-text">Enter your recovery email and password to continue.</p>
+      </article>
+
+      <aside class="hero-actions code-actions">
+        <form id="signInForm" class="auth-form btn-group">
+          <label class="code-label" for="recoveryEmail">RECOVERY EMAIL</label>
+          <input class="code-input" type="email" id="recoveryEmail" placeholder="Enter your recovery email" required>
+          
+          <label class="code-label" for="recoveryPassword">PASSWORD</label>
+          <div class="password-wrapper">
+            <input class="code-input" type="password" id="recoveryPassword" placeholder="Enter your password" required>
+            <button type="button" id="togglePasswordBtn" class="toggle-password" aria-label="Toggle password visibility">
+              <span id="toggleIcon" class="material-symbols-rounded">visibility</span>
+            </button>
+          </div>
+          
+          <button class="btn" type="submit">SIGN IN</button>
+          
+          <p class="code-note">Use the email and password you saved in your profile.</p>
+          <center><a id="contactLink" href="contact.html">Don't have an email?</a></center>
+          <div id="signInMessage" class="auth-message"></div>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+<script>
+  // كود القائمة الجانبية
+  const menuBtn = document.getElementById('menuBtn');
+  const sideMenu = document.getElementById('sideMenu');
+  const overlay = document.getElementById('menuOverlay');
+  const closeMenu = document.getElementById('closeMenu');
+
+  function openMenu() {
+    sideMenu.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenuPanel() {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenu) closeMenu.addEventListener('click', closeMenuPanel);
+  if (overlay) overlay.addEventListener('click', closeMenuPanel);
+
+  // كود زر إظهار/إخفاء كلمة السر
+  const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+  const passwordInput = document.getElementById('recoveryPassword');
+  const toggleIcon = document.getElementById('toggleIcon');
+
+  if (togglePasswordBtn && passwordInput) {
+    togglePasswordBtn.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      toggleIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+    });
+  }
+</script>
+</body>
+</html>

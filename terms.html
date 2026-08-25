@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terms and Conditions</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    
+    <style>
+        .terms-container {
+            width: min(100%, 900px);
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 28px 20px 18px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 20px;
+        }
+
+        .terms-header h1 {
+            color: #ffd94d;
+            font-size: 40px;
+            margin: 0 0 10px 0;
+            text-shadow: 0 0 15px rgba(255, 217, 77, 0.28);
+        }
+
+        .terms-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .terms-content {
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 15px;
+            padding: 30px 32px 24px;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.8;
+        }
+
+        .terms-section {
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .terms-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .terms-section h2 {
+            color: #ffd94d;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 8px;
+            letter-spacing: 1.2px;
+            font-weight: 400;
+        }
+
+        .terms-section p {
+            margin: 8px 0;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #ffe46b 0%, #ffd700 45%, #ffef99 100%);
+            border: none;
+            border-radius: 15px;
+            color: rgb(0, 0, 103);
+            font-family: 'Share Tech', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ==========================================
+           THE BEST EVER PREMIUM FOOTER STYLE
+        ========================================== */
+        .terms-footer {
+            margin-top: 80px;
+            padding: 50px 24px 30px;
+            box-sizing: border-box;
+            background: linear-gradient(180deg, rgba(4, 4, 59, 0.6) 0%, rgba(1, 1, 31, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 215, 0, 0.25);
+            text-align: center;
+            position: relative;
+            box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .terms-footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        .footer-badges-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .terms-footer .copyright-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            color: #ffd700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .terms-footer .designer-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .terms-footer .designer-badge:hover {
+            background: rgba(255, 215, 0, 0.12);
+            border-color: #ffd700;
+            color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .terms-footer p {
+            margin: 0;
+            max-width: 540px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.5px;
+        }
+
+        .terms-footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 10px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .terms-footer-links a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.25s ease;
+        }
+
+        .terms-footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1.5px;
+            background: #ffd700;
+            transition: width 0.25s ease, left 0.25s ease;
+        }
+
+        .terms-footer-links a:hover {
+            color: #ffd700;
+        }
+
+        .terms-footer-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        @media (max-width: 480px) {
+            .terms-footer {
+                margin-top: 50px;
+                padding: 40px 16px 24px;
+                gap: 16px;
+            }
+            
+            .terms-footer p {
+                font-size: 12px;
+                padding: 0 10px;
+            }
+            
+            .terms-footer-links {
+                gap: 20px;
+                padding-top: 16px;
+            }
+            
+            .terms-footer-links a {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+</head>
+<body>
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <div class="upbox">
+        &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"><img src="logo.png" width="70px" alt="Logo"></div>
+        <span class="brand-name">AMR SAKR</span>
+        <div class="upboxs">
+            <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+                <img src="menu.png" width="60px" alt="Menu">
+            </button>
+        </div>
+    </div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+      <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu"><span class="material-symbols-rounded">close</span></button>
+      <h2>AMR SAKR</h2>
+      <a href="index.html"><span class="material-symbols-rounded menu-icon">home</span>HOME</a>
+      <a href="contact.html"><span class="material-symbols-rounded menu-icon">mail</span>CONTACT</a>
+      <a href="designer.html"><span class="material-symbols-rounded menu-icon">brush</span>THE WEB DESIGNER</a>
+    </aside>
+    <main class="hero-wrap terms-container">
+        <section class="terms-header">
+            <h1>TERMS & CONDITIONS</h1>
+            <p>Last Updated: July 2026</p>
+        </section>
+
+        <section class="terms-content">
+            <div class="terms-section">
+                <h2>1. ACCEPTANCE OF TERMS</h2>
+                <p>By using this platform, you agree to these terms. If you don't agree, please don't use it.</p>
+            </div>
+            
+            <div class="terms-section">
+                <h2>2. USER ACCOUNT</h2>
+                <p>You are responsible for keeping your login credentials confidential. Do not share your account with others.</p>
+            </div>
+            
+            <div class="terms-section">
+                <h2>3. CONTENT OWNERSHIP</h2>
+                <p>All course materials and videos are owned by AMR SAKR. You can view them for personal learning only.</p>
+            </div>
+            
+            <div class="terms-section">
+                <h2>4. NO RECORDING</h2>
+                <p>Recording, downloading, or sharing course content without permission is prohibited.</p>
+            </div>
+            
+            <div class="terms-section">
+                <h2>5. CONTACT US</h2>
+                <p>For questions, visit our <a href="contact.html" style="color: #ffe89d;">Contact Page</a>.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>6. PLATFORM DEVELOPMENT & CREATIVE RIGHTS</h2>
+                <p>The layout, custom source code, UI/UX architecture, and interactive styling of this platform are engineered and creatively owned by <strong>The Web Designer</strong>. Unauthorized duplication, cloning, or distribution of the platform's codebase is strictly monitored and protected.</p>
+            </div>
+
+            <a href="index.html" class="back-button">← BACK TO HOME</a>
+        </section>
+    </main>
+
+    <footer class="terms-footer">
+        <div class="footer-badges-container">
+            <div class="copyright-badge">© 2026 AMR SAKR</div>
+            <a href="designer.html" class="designer-badge">Crafted by Diaa Abdelhady</a>
+        </div>
+        <p>All rights reserved. This platform and its content are protected by copyright law.</p>
+        <div class="terms-footer-links">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms</a>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        function openMenu() {
+            sideMenu.classList.add('open');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenuPanel() {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        menuBtn.addEventListener('click', openMenu);
+        closeMenu.addEventListener('click', closeMenuPanel);
+        overlay.addEventListener('click', closeMenuPanel);
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeMenuPanel();
+            }
+        });
+    </script>
+</body>
+</html>

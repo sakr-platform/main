@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COMPLETED LESSONS & ACHIEVEMENTS | AMR SAKR</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png" type="image/png">
+  <style>
+    /* ==========================================================================
+       1. Global Page Setup & Space Background with Twinkling Stars
+       ========================================================================== */
+    body {
+      font-family: 'Share Tech', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #02040c;
+      background-image:
+        radial-gradient(ellipse 900px 500px at 80% 10%, rgba(120, 60, 200, 0.18), transparent 70%),
+        radial-gradient(ellipse 800px 600px at 10% 90%, rgba(0, 140, 200, 0.14), transparent 70%),
+        radial-gradient(ellipse 1400px 300px at 50% 40%, rgba(150, 170, 255, 0.06), transparent 75%),
+        linear-gradient(180deg, #02040c 0%, #060a1a 45%, #0a0f22 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      perspective: 1500px;
+      position: relative;
+    }
+
+    /* JavaScript Generated Starfield Layer */
+    .starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: starTwinkle ease-in-out infinite;
+    }
+    @keyframes starTwinkle {
+      0%, 100% { opacity: var(--base-op); transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* ==========================================================================
+       2. Three Distant Planets Layout for Space Depth
+       ========================================================================== */
+    .planet-one {
+      position: fixed;
+      top: 15%;
+      right: -50px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 30% 30%, #8e44ad 0%, #4a235a 70%, #1a0c24 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(142, 68, 173, 0.4), inset -15px -15px 40px rgba(0,0,0,0.8);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .planet-two {
+      position: fixed;
+      top: 50%;
+      left: -60px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle at 30% 30%, #3498db 0%, #21618c 70%, #0e314c 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(52, 152, 219, 0.5), inset -10px -10px 30px rgba(0,0,0,0.8);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .planet-two::after {
+      content: "";
+      position: absolute;
+      top: 45%;
+      left: -40px;
+      width: 240px;
+      height: 20px;
+      border: 4px solid rgba(0, 210, 255, 0.5);
+      border-radius: 50%;
+      transform: rotate(-20deg);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    }
+
+    .planet-three {
+      position: fixed;
+      bottom: 10%;
+      right: 5%;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle at 30% 30%, #e74c3c 0%, #78281f 70%, #3a0f0a 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(231, 76, 60, 0.4), inset -5px -5px 15px rgba(0,0,0,0.8);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       3. Header & Brand Title Area
+       ========================================================================== */
+    .header-area {
+      text-align: center;
+      padding: 160px 20px 20px; 
+      position: relative;
+      z-index: 5;
+    }
+    .header-area h1 {
+      font-size: 46px;
+      color: #fff;
+      text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff;
+      margin: 0 0 12px;
+      letter-spacing: 1px;
+    }
+    .header-area p {
+      color: #a0a5b5;
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* ==========================================================================
+       4. Roadmap Curved Path & Badge Layer Ordering
+       ========================================================================== */
+    .roadmap-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1250px;
+      margin: 10px auto 150px;
+      padding: 40px 10px;
+      box-sizing: border-box;
+      z-index: 6; 
+    }
+
+    .path-container {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start; 
+      gap: 180px 65px; 
+      z-index: 10; 
+      padding-left: 20px; 
+    }
+
+    .svg-path-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2; 
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       5. Medals Design & Strict Layering
+       ========================================================================== */
+    .medal-container {
+      width: 110px;
+      height: 150px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      z-index: 20; 
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .medal-ribbon {
+      width: 44px;
+      height: 55px;
+      background: linear-gradient(90deg, #ff0055 0%, #ff0055 35%, #00d2ff 35%, #00d2ff 65%, #ff0055 65%);
+      clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+      filter: drop-shadow(0px 4px 5px rgba(0,0,0,0.5));
+      z-index: 21;
+    }
+
+    .medal-circle {
+      width: 86px;
+      height: 86px;
+      background: radial-gradient(circle, #ffe066 0%, #f1c40f 60%, #d35400 100%);
+      border: 5px solid #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.6), inset 0 4px 0 rgba(255,255,255,0.6);
+      margin-top: -12px;
+      z-index: 22; 
+    }
+
+    .medal-inner {
+      width: 66px;
+      height: 66px;
+      border: 3px dashed #e67e22;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .medal-icon {
+      font-size: 36px;
+      filter: drop-shadow(2px 3px 0px rgba(0,0,0,0.25));
+    }
+
+    .badge-label {
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00d2ff;
+      color: #060b14;
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+      box-shadow: 0px 0px 10px #00d2ff;
+      border: 2px solid #fff;
+      z-index: 23; 
+    }
+
+    .medal-container:hover {
+      transform: scale(1.18) translateY(-6px);
+      z-index: 100; 
+    }
+
+    /* Alternating Vertical Offsets */
+    .path-container .medal-container:nth-child(4n+1) { margin-top: -60px; }
+    .path-container .medal-container:nth-child(4n+2) { margin-top: 110px; }
+    .path-container .medal-container:nth-child(4n+3) { margin-top: -20px; }
+    .path-container .medal-container:nth-child(4n+4) { margin-top: 130px; }
+
+    /* ==========================================================================
+       6. Grand Entrance Animation (Hangs beautifully from top down to its spot)
+       ========================================================================== */
+    .mega-pop-spin {
+      z-index: 99999 !important; 
+      opacity: 0; /* Hidden initially until scroll finishes */
+      animation: super3DMedalSpin 3.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+      animation-delay: 0.8s; /* Waits for smooth scroll to finish */
+    }
+
+    @keyframes super3DMedalSpin {
+      0% {
+        opacity: 0;
+        transform: translateY(-500px) scale(4) rotateY(0deg) rotateX(45deg);
+        filter: drop-shadow(0 50px 50px rgba(0, 210, 255, 0.8));
+      }
+      15% {
+        opacity: 1;
+      }
+      45% {
+        transform: translateY(-80px) scale(3.5) rotateY(720deg) rotateX(0deg);
+        filter: drop-shadow(0 25px 40px rgba(0, 210, 255, 0.6));
+      }
+      75% {
+        transform: translateY(-80px) scale(3.5) rotateY(1080deg) rotateX(0deg);
+        filter: drop-shadow(0 25px 40px rgba(0, 210, 255, 0.6));
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateY(1440deg) rotateX(0deg);
+      }
+    }
+
+    .no-badges {
+      text-align: center;
+      padding: 80px;
+      color: #00d2ff;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 0 0 10px #00d2ff;
+      width: 100%;
+    }
+  </style>
+    <!-- Settings System Initializer -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('settings-theme') || 'dark';
+        const accent = localStorage.getItem('settings-accent') || 'gold';
+        const fontSize = localStorage.getItem('settings-fontSize') || 'normal';
+        const sidebarSide = localStorage.getItem('settings-sidebarSide') || 'right';
+        const animations = localStorage.getItem('settings-animations') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+        document.documentElement.setAttribute('data-sidebar-side', sidebarSide);
+        document.documentElement.setAttribute('data-animations', animations);
+      })();
+    </script>
+    <script src="settings.js" defer></script>
+  <script type="module" src="student-session.js"></script>
+</head>
+<body>
+<script>
+(function(){
+  const hasAccess = !!(localStorage.getItem('savedCode') || localStorage.getItem('userId'));
+  if (!hasAccess) {
+    localStorage.removeItem('savedCode');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('completedLessons');
+    localStorage.removeItem('userRole');
+    window.location.replace('code.html');
+  }
+})();
+</script>
+
+  <div id="starfield" class="starfield"></div>
+  <div class="planet-one"></div>
+  <div class="planet-two"></div>
+  <div class="planet-three"></div>
+
+  <div id="menuOverlay" class="menu-overlay"></div>
+  <div class="upbox">
+    &nbsp;&nbsp;&nbsp;&nbsp;<div class="hh"><img src="logo.png" width="70px" alt="Logo"></div>
+    <span class="brand-name">AMR SAKR</span>
+    <div class="upboxs">
+      <button id="menuBtn" class="menu-btn" type="button" aria-label="Open menu">
+        <img src="menu.png" width="60px" alt="Menu">
+      </button>
+    </div>
+  </div>
+
+  <aside id="sideMenu" class="side-menu" aria-label="Main menu">
+    <button id="closeMenu" class="close-menu" type="button" aria-label="Close menu"><span class="material-symbols-rounded">close</span></button>
+    <h2>AMR SAKR</h2>
+<a href="index.html"><span class="material-symbols-rounded menu-icon">home</span>HOME</a>
+    <a href="channel.html"><span class="material-symbols-rounded menu-icon">school</span>STUDENT PAGE</a>
+    <a href="designer.html"><span class="material-symbols-rounded menu-icon">brush</span>THE WEB DESIGNER</a>
+    <a href="#" onclick="localStorage.removeItem('savedCode'); localStorage.removeItem('userId'); localStorage.removeItem('userName'); localStorage.removeItem('completedLessons'); window.location.href='index.html';"><span class="material-symbols-rounded menu-icon">logout</span>SIGN OUT</a>
+  </aside>
+
+  <main>
+    <div class="header-area">
+      <h1>ACHIEVEMENT ROADMAP</h1>
+      <p>Track your learning progress and view your unlocked curriculum medals</p>
+    </div>
+
+    <div class="roadmap-wrapper">
+      <svg class="svg-path-layer" id="svgPathLayer">
+        <path id="glowRoad" d="" fill="none" stroke="#00d2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 8px #00d2ff) blur(1px); opacity: 0.65;"/>
+        <path id="wavyPath" d="" fill="none" stroke="#00ffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 2px #fff);"/>
+      </svg>
+      <section id="badgesContainer" class="path-container"></section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAC1bNuWAD8noagHV2SD0y4PP0ABhxDdqo",
+      authDomain: "students-68430.firebaseapp.com",
+      projectId: "students-68430",
+      storageBucket: "students-68430.firebasestorage.app",
+      messagingSenderId: "202641775624",
+      appId: "1:202641775624:web:fe2d70e4ec92d62d5b85bd"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.syncMedalsToFirebase = async function(updatedLessons) {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return;
+      try {
+        const ref = doc(db, "students", userId);
+        await updateDoc(ref, { completedLessons: updatedLessons });
+      } catch (error) {
+        console.error("Error updating badges in Firebase:", error);
+      }
+    };
+  </script>
+
+  <script>
+    function generateStarfield() {
+      const field = document.getElementById('starfield');
+      if (!field) return;
+      field.innerHTML = "";
+      const count = Math.round((window.innerWidth * window.innerHeight) / 3500);
+      const frag = document.createDocumentFragment();
+
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 2.2 + 0.4;
+        const baseOpacity = Math.random() * 0.6 + 0.25;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.setProperty('--base-op', baseOpacity);
+        star.style.opacity = baseOpacity;
+        star.style.boxShadow = size > 1.8 ? `0 0 ${size * 2}px rgba(180,210,255,0.8)` : 'none';
+        star.style.animationDuration = `${(Math.random() * 4 + 2.5).toFixed(2)}s`;
+        star.style.animationDelay = `${(Math.random() * 5).toFixed(2)}s`;
+        frag.appendChild(star);
+      }
+      field.appendChild(frag);
+    }
+    generateStarfield();
+    window.addEventListener('resize', () => {
+      clearTimeout(window._starResizeTimer);
+      window._starResizeTimer = setTimeout(generateStarfield, 300);
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    function openMenu() { sideMenu.classList.add('open'); overlay.classList.add('show'); }
+    function closeMenuPanel() { sideMenu.classList.remove('open'); overlay.classList.remove('show'); }
+    menuBtn.addEventListener('click', openMenu);
+    closeMenu.addEventListener('click', closeMenuPanel);
+    overlay.addEventListener('click', closeMenuPanel);
+
+    function renderRoadmap() {
+      const container = document.getElementById("badgesContainer");
+      let achievements = JSON.parse(localStorage.getItem("completedLessons") || "[]");
+
+      if (achievements.length === 0) {
+        container.innerHTML = `<div class="no-badges">NO ACHIEVEMENTS UNLOCKED YET! 🎯</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+
+      achievements.forEach((lesson) => {
+        const animClass = lesson.isNew ? "mega-pop-spin" : "";
+
+        container.innerHTML += `
+          <div class="medal-container ${animClass}" ${lesson.isNew ? 'id="newTargetMedal"' : ''}>
+            <div class="medal-ribbon"></div>
+            <div class="medal-circle">
+              <div class="medal-inner">
+                <div class="medal-icon">🏆</div>
+              </div>
+            </div>
+            <div class="badge-label">${lesson.name}</div>
+          </div>
+        `;
+      });
+
+      setTimeout(drawConnectingWavyLine, 100);
+      window.addEventListener('resize', drawConnectingWavyLine);
+
+      const target = document.getElementById("newTargetMedal");
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 200);
+      }
+
+      setTimeout(() => {
+        let hasNew = achievements.some(l => l.isNew);
+        if (hasNew) {
+          let updatedAchievements = achievements.map(l => ({ ...l, isNew: false }));
+          // 1. تحديث الكاش المحلي فوراً
+          localStorage.setItem("completedLessons", JSON.stringify(updatedAchievements));
+          
+          // 2. مزامنة التحديث السحابي مع الفايربيز تلقائياً لضمان عدم تكرار العرض
+          if (window.syncMedalsToFirebase) {
+            window.syncMedalsToFirebase(updatedAchievements);
+          }
+        }
+        
+        document.querySelectorAll('.medal-container').forEach(el => el.classList.remove('mega-pop-spin'));
+        drawConnectingWavyLine(); 
+      }, 4500); 
+    }
+
+    function drawConnectingWavyLine() {
+      const nodes = document.querySelectorAll('.medal-container');
+      const path = document.getElementById('wavyPath');
+      const glowRoad = document.getElementById('glowRoad');
+      const svg = document.getElementById('svgPathLayer');
+      
+      if (nodes.length < 2) {
+        path.setAttribute('d', '');
+        if(glowRoad) glowRoad.setAttribute('d', '');
+        return;
+      }
+
+      const svgRect = svg.getBoundingClientRect();
+      let dAttribute = "";
+
+      nodes.forEach((node, index) => {
+        const rect = node.getBoundingClientRect();
+        const x = rect.left - svgRect.left + (rect.width / 2);
+        const y = rect.top - svgRect.top + (rect.height / 2) + 38;
+
+        if (index === 0) {
+          dAttribute += `M ${x} ${y}`;
+        } else {
+          const prevRect = nodes[index - 1].getBoundingClientRect();
+          const prevX = prevRect.left - svgRect.left + (prevRect.width / 2);
+          const prevY = prevRect.top - svgRect.top + (prevRect.height / 2) + 38;
+          
+          const cpX1 = prevX + (x - prevX) * 0.45;
+          const cpY1 = prevY;
+          const cpX2 = prevX + (x - prevX) * 0.55;
+          const cpY2 = y;
+
+          dAttribute += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${x} ${y}`;
+        }
+      });
+
+      path.setAttribute('d', dAttribute);
+      if(glowRoad) glowRoad.setAttribute('d', dAttribute);
+    }
+
+    renderRoadmap();
+  </script>
+</body>
+</html>
