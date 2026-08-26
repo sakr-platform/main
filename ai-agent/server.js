@@ -38,6 +38,13 @@ app.options('/api/telegram-registration', (req, res) => {
   res.sendStatus(204);
 });
 
+app.options('/api/telegram-content-notification', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(204);
+});
+
 app.get('/ai-agent', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
