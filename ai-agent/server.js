@@ -38,13 +38,6 @@ app.options('/api/telegram-registration', (req, res) => {
   res.sendStatus(204);
 });
 
-app.options('/api/telegram-content-notification', (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type');
-  res.sendStatus(204);
-});
-
 app.get('/ai-agent', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -209,9 +202,16 @@ app.post('/api/telegram-content-notification', async (req, res) => {
     let sent = 0;
     for (const recipient of recipients) {
       try {
-        const text = recipient.language === 'ar'
-          ? `تم إضافة ${type === 'lesson' ? 'حصة' : type === 'document' ? 'ملف' : 'جلسة جديدة'}\n${name}`
-          : `New ${type || 'content'} is available\n${name}`;
+        let text = '';
+        if (type === 'homework') {
+          text = recipient.language === 'ar'
+            ? `واجبك الجديد هو : ${name}`
+            : `the new homework is : ${name}`;
+        } else {
+          text = recipient.language === 'ar'
+            ? `تم إضافة ${type === 'lesson' ? 'حصة' : type === 'document' ? 'ملف' : 'جلسة جديدة'}\n${name}`
+            : `New ${type || 'content'} is available\n${name}`;
+        }
         await telegramApi('sendMessage', { chat_id: recipient.chatId, text });
         sent += 1;
       } catch (error) {
