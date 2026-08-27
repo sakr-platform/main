@@ -44,9 +44,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="icon" href="logo.png" type="image/png">
   <link rel="apple-touch-icon" href="logo.png">
-
 
   <style>
     .landing-auth-btn {
@@ -74,6 +74,78 @@
     .landing-auth-btn:hover { background: #fff; }
     .landing-auth-btn.primary:hover { background: #101fa0; }
 
+    /* تنسيقات الأزرار الرئيسية الواضحة للزائر */
+    .main-hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 52px;
+      border-radius: 14px;
+      font-family: "Share Tech", sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .cta-btn-primary {
+      background: linear-gradient(135deg, #fff7c5 0%, #ffd700 45%, #ffbb00 100%);
+      color: #000067;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .cta-btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .secondary-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .secondary-links a {
+      flex: 1;
+      text-decoration: none;
+    }
+
+    .sub-btn {
+      width: 100%;
+      min-height: 40px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .sub-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
     @media (max-width: 620px) {
       .upbox { gap: 6px; padding-left: 8px; padding-right: 6px; }
       .upbox .hh img { width: 52px; }
@@ -100,14 +172,12 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 30, 0.7);
-      /* لون نيلي متناسق مع الخلفية */
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 99999;
-      /* أعلى من كل شيء بما في ذلك القائمة الجانبية */
       padding: 16px;
       box-sizing: border-box;
     }
@@ -124,7 +194,6 @@
       overflow-y: auto;
       box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 215, 0, 0.25);
-      /* إطار ذهبي خفيف */
       font-family: "Share Tech", sans-serif;
       display: flex;
       flex-direction: column;
@@ -134,7 +203,6 @@
     .terms-popup-header h1 {
       font-size: 26px;
       color: #ffd700;
-      /* اللون الذهبي الخاص بمنصتك */
       margin: 0 0 4px 0;
       text-align: center;
       letter-spacing: 1px;
@@ -176,7 +244,6 @@
       margin: 0;
     }
 
-    /* زر الموافقة المماثل لأزرار الموقع الأصلية */
     .btn-agree {
       background: linear-gradient(135deg, #fff7c5 0%, #ffd700 45%, #ffbb00 100%);
       color: rgb(0, 0, 103);
@@ -202,7 +269,6 @@
       transform: translateY(0);
     }
 
-    /* تخصيص السكرول بار الداخلي ليناسب التصميم المخفي للموقع */
     .terms-popup-content::-webkit-scrollbar {
       width: 4px;
     }
@@ -212,7 +278,6 @@
       border-radius: 10px;
     }
 
-    /* تعديلات خاصة بالشاشات الصغيرة والموبايل الصغير جداً */
     @media (max-width: 400px) {
       .terms-popup-box {
         padding: 18px 14px;
@@ -253,8 +318,7 @@
 
         <div class="terms-section">
           <h2>2. USER ACCOUNT</h2>
-          <p>You are responsible for keeping your login credentials confidential. Do not share your account with others.
-          </p>
+          <p>You are responsible for keeping your login credentials confidential. Do not share your account with others.</p>
         </div>
 
         <div class="terms-section">
@@ -310,19 +374,33 @@
         <img src="logo.png" width="350px" id="mlogo" alt="AMR SAKR logo">
         <h1 class="hero-title">AMR SAKR</h1>
         <p class="hero-text">science educator <br> ( dive into the world of science )</p>
-      </article>
+      </article><br>
 
       <aside class="hero-actions">
-        <div class="btn-group">
-          <a href="contact.html"><button class="btn">CONTACT SUPPORT</button></a>
-          <a href="terms.html"><button class="btn">TERMS & CONDITIONS</button></a>
+        <div class="main-hero-actions">
+          <!-- زر لإنشاء حساب جديد (بارز باللون الذهبي) -->
+          <a href="signup.html" class="cta-btn cta-btn-primary">
+            <span class="material-symbols-rounded">person_add</span>
+            CREATE NEW ACCOUNT
+          </a>
+
+          <!-- زر لتسجيل الدخول (للمستخدم الحالي) -->
+          <a href="code.html" class="cta-btn cta-btn-secondary">
+            <span class="material-symbols-rounded">login</span>
+            I HAVE AN ACCOUNT (SIGN IN)
+          </a>
+
+          <!-- روابط الدعم والشروط الفرعية -->
+          <div class="secondary-links">
+            <a href="contact.html"><button class="sub-btn">SUPPORT</button></a>
+            <a href="terms.html"><button class="sub-btn">TERMS</button></a>
+          </div>
         </div>
       </aside>
     </section>
   </main>
 
   <script>
-    // كود القائمة الجانبية الأصلي الخاص بك
     const menuBtn = document.getElementById('menuBtn');
     const sideMenu = document.getElementById('sideMenu');
     const overlay = document.getElementById('menuOverlay');
@@ -350,23 +428,20 @@
       }
     });
 
-    // الكود الجديد الخاص بـ البوكس المنبثق للشروط والأحكام (يظهر مرة واحدة فقط)
     const termsPopup = document.getElementById('termsPopup');
     const agreeBtn = document.getElementById('agreeBtn');
 
     window.addEventListener('DOMContentLoaded', () => {
-      // التحقق مما إذا كان المستخدم قد وافق سابقاً أم لا
       if (!localStorage.getItem('termsAccepted')) {
         termsPopup.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // منع السكرول في الخلفية أثناء ظهور البوكس
+        document.body.style.overflow = 'hidden';
       }
     });
 
     agreeBtn.addEventListener('click', () => {
-      // حفظ موافقة المستخدم في المتصفح وإغلاق البوكس
       localStorage.setItem('termsAccepted', 'true');
       termsPopup.style.display = 'none';
-      document.body.style.overflow = ''; // إعادة تفعيل السكرول
+      document.body.style.overflow = '';
     });
   </script>
 
